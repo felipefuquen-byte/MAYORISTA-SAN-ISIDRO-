@@ -3,926 +3,522 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>San Isidro | Del Campo al Mercado</title>
-  
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              50: '#f2fbf5',
-              100: '#e1f7e9',
-              500: '#1b7a43',
-              600: '#156736',
-              700: '#11522a',
-              800: '#0c3e1f',
-              accent: '#d97706',
-              gold: '#eab308'
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            serif: ['Georgia', 'Cambria', 'serif']
-          }
-        }
-      }
-    }
-  </script>
-  
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
-
+  <title>San Isidro - Catálogo Virtual</title>
   <style>
+    :root {
+      --primary: #2d6a4f;
+      --primary-dark: #1b4332;
+      --accent: #e76f51;
+      --bg: #f4f6f8;
+      --card-bg: #ffffff;
+      --border: #e2e8f0;
+      --text: #1a202c;
+      --text-muted: #718096;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
     body {
-      font-family: 'Inter', sans-serif;
-      -webkit-tap-highlight-color: transparent;
+      background-color: var(--bg);
+      color: var(--text);
+      padding-bottom: 90px;
     }
-    .custom-scroll::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+
+    /* Encabezado */
+    header {
+      background: #ffffff;
+      text-align: center;
+      padding: 1.2rem 1rem;
+      border-bottom: 3px solid var(--primary);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
     }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background-color: #cbd5e1;
-      border-radius: 9999px;
+
+    .brand-logo {
+      max-width: 130px;
+      height: auto;
+      display: block;
+      margin: 0 auto 0.4rem auto;
     }
-    .badge-pop {
-      animation: pop 0.25s ease-out;
+
+    header h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
     }
-    @keyframes pop {
-      0% { transform: scale(0.8); }
-      50% { transform: scale(1.25); }
-      100% { transform: scale(1); }
+
+    header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .container {
+      max-width: 1050px;
+      margin: 1.2rem auto;
+      padding: 0 1rem;
+    }
+
+    /* Buscador */
+    .search-box {
+      margin-bottom: 1.2rem;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      outline: none;
+      background: #fff;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    /* Catálogo de Productos */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 1rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .product-icon {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .product-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .product-unit {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-price {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .btn-add {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .btn-add:hover {
+      background: var(--primary-dark);
+    }
+
+    /* Barra flotante inferior */
+    .floating-cart-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      padding: 0.9rem 1.2rem;
+      box-shadow: 0 -3px 10px rgba(0,0,0,0.08);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .cart-summary {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .btn-view-cart {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 0.65rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Modal Carrito */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #fff;
+      width: 100%;
+      max-width: 500px;
+      max-height: 90vh;
+      border-radius: 16px 16px 0 0;
+      padding: 1.2rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .modal-header h2 {
+      font-size: 1.25rem;
+      color: var(--primary);
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #777;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .cart-item-controls button {
+      background: #edf2f7;
+      border: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Formulario de Checkout */
+    .checkout-form {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .checkout-form label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a5568;
+    }
+
+    .checkout-form input,
+    .checkout-form select,
+    .checkout-form textarea {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #cbd5e0;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .btn-submit-order {
+      background: #25d366;
+      color: #fff;
+      border: none;
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-submit-order:hover {
+      background: #20b858;
     }
   </style>
 </head>
-<body class="bg-stone-100 text-stone-900 pb-28 min-h-screen selection:bg-brand-500 selection:text-white">
+<body>
 
-  <header class="bg-white border-b border-stone-200 sticky top-0 z-30 shadow-sm backdrop-blur-md bg-white/90">
-    <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <!-- Logo SVG emblem as high-reliability fallback if local image isn't loaded -->
-        <div class="relative w-12 h-12 rounded-full border-2 border-brand-500 shadow-md flex items-center justify-center bg-gradient-to-tr from-amber-700 via-amber-500 to-green-600 text-white overflow-hidden p-0.5">
-          <img 
-            src="logo.png" 
-            alt="San Isidro" 
-            id="headerLogoImg" 
-            class="w-full h-full object-cover rounded-full hidden" 
-            onload="this.classList.remove('hidden'); document.getElementById('headerLogoFallback').classList.add('hidden');"
-            onerror="this.classList.add('hidden'); document.getElementById('headerLogoFallback').classList.remove('hidden');"
-          />
-          <div id="headerLogoFallback" class="flex flex-col items-center justify-center text-xs font-bold leading-tight text-center text-white">
-            <i class="fa-solid fa-seedling text-base"></i>
-            <span class="text-[9px] uppercase tracking-tighter">Campo</span>
-          </div>
-        </div>
-        <div>
-          <h1 class="text-xl font-bold tracking-tight text-brand-700 flex items-center gap-1.5 leading-none font-serif">
-            SAN ISIDRO
-            <span class="text-[11px] font-sans font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full uppercase tracking-wider">100% Natural</span>
-          </h1>
-          <p class="text-xs text-stone-500 font-medium tracking-wide">Venta directa del campo al mercado</p>
-        </div>
-      </div>
-
-      <!-- Quick Cart Button in Header -->
-      <button 
-        onclick="openCartModal()" 
-        aria-label="Abrir carrito"
-        class="relative p-2.5 rounded-full bg-emerald-50 text-brand-700 hover:bg-emerald-100 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
-        <i class="fa-solid fa-basket-shopping text-xl"></i>
-        <span 
-          id="cartHeaderBadge" 
-          class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
-          0
-        </span>
-      </button>
-    </div>
+  <!-- Encabezado -->
+  <header>
+    <img src="logo.png" alt="San Isidro" class="brand-logo" onerror="this.style.display='none'" />
+    <h1>San Isidro</h1>
+    <p>Venta directa del campo al mercado</p>
   </header>
 
-  <section class="relative bg-gradient-to-br from-brand-700 via-emerald-800 to-stone-900 text-white overflow-hidden py-8 px-4 shadow-inner">
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 relative z-10">
-      <div class="flex-1 text-center md:text-left space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-semibold text-amber-300">
-          <i class="fa-solid fa-truck-fast"></i> Despachos directos a tu hogar
-        </div>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-          Frutas, Verduras y Tubérculos <span class="text-amber-400">Frescos de Origen</span>
-        </h2>
-        <p class="text-emerald-100 text-sm md:text-base max-w-xl">
-          Cosecha seleccionada de los mejores agricultores. Elige tus productos, agrega al carrito y recibe la cotización instantánea en tu WhatsApp.
-        </p>
-        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-medium text-emerald-200 pt-1">
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-heart text-amber-400"></i> Calidad Garantizada</span>
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-hand-holding-dollar text-amber-400"></i> Precios Justos</span>
-          <span class="flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-400"></i> Pedido Directo</span>
-        </div>
-      </div>
-
-      <!-- Hero Visual Emblem Card -->
-      <div class="w-full max-w-xs bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center shadow-2xl flex flex-col items-center">
-        <div class="w-24 h-24 rounded-full bg-stone-900/60 p-1 mb-2 border-2 border-amber-400 shadow-inner flex items-center justify-center overflow-hidden">
-          <img 
-            src="logo.png" 
-            alt="San Isidro Campesino" 
-            class="w-full h-full object-cover rounded-full" 
-            onerror="this.src='https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=300&q=80'"
-          />
-        </div>
-        <h3 class="font-bold text-base tracking-wide text-amber-300">Hacienda San Isidro</h3>
-        <p class="text-xs text-stone-200">Aguacates especiales Hass, tubérculos y frutas de clima templado y frío.</p>
-        <div class="mt-3 text-xs bg-emerald-950/80 px-3 py-1.5 rounded-xl border border-emerald-500/40 text-emerald-200">
-          WhatsApp Oficial: <strong>+57 315 107 2639</strong>
-        </div>
-      </div>
+  <div class="container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="🔍 Buscar fruta, verdura o tubérculo..." oninput="filterProducts()" />
     </div>
-  </section>
-
-  <main class="max-w-5xl mx-auto px-4 py-6">
-    <section class="mb-6 space-y-3">
-      <!-- Search Input -->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </span>
-        <input 
-          type="search" 
-          id="searchInput" 
-          placeholder="Buscar aguacate, papa criolla, plátano, etc..." 
-          class="w-full pl-10 pr-10 py-3 bg-white border border-stone-300 rounded-xl shadow-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all text-sm sm:text-base"
-          oninput="handleSearch(this.value)"
-        />
-        <button 
-          id="clearSearchBtn" 
-          onclick="clearSearch()" 
-          class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-stone-600">
-          <i class="fa-solid fa-circle-xmark"></i>
-        </button>
-      </div>
-
-      <!-- Category Filter Chips -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-1.5 custom-scroll select-none">
-        <button 
-          onclick="filterCategory('todos')" 
-          data-category="todos"
-          class="category-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-brand-600 text-white shadow-sm shadow-brand-500/30">
-          <i class="fa-solid fa-border-all mr-1.5"></i> Todos los productos
-        </button>
-        <button 
-          onclick="filterCategory('frutas')" 
-          data-category="frutas"
-          class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">
-          <i class="fa-solid fa-apple-whole text-red-500 mr-1.5"></i> Frutas
-        </button>
-        <button 
-          onclick="filterCategory('verduras')" 
-          data-category="verduras"
-          class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">
-          <i class="fa-solid fa-carrot text-orange-500 mr-1.5"></i> Verduras & Hortalizas
-        </button>
-        <button 
-          onclick="filterCategory('tuberculos')" 
-          data-category="tuberculos"
-          class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">
-          <i class="fa-solid fa-cubes-stacked text-amber-700 mr-1.5"></i> Tubérculos
-        </button>
-      </div>
-    </section>
-
-    <div class="flex items-center justify-between mb-3 px-1">
-      <h3 class="text-sm font-bold text-stone-600 uppercase tracking-wider flex items-center gap-2">
-        <i class="fa-solid fa-boxes-stacked text-brand-600"></i> Catálogo Disponible (<span id="visibleCount">0</span>)
-      </h3>
-      <span class="text-xs text-stone-500">Valores en Pesos Colombianos (COP)</span>
-    </div>
-
-    <!-- Product Grid -->
-    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
-      <!-- Injected via JavaScript -->
-    </div>
-
-    <!-- Empty Results Placeholder -->
-    <div id="noResultsState" class="hidden text-center py-16 px-4 bg-white rounded-2xl border border-stone-200 mt-4">
-      <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto text-stone-400 text-2xl mb-3">
-        <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
-      </div>
-      <h4 class="text-base font-bold text-stone-700">No encontramos productos coincidentes</h4>
-      <p class="text-xs text-stone-500 mt-1 max-w-sm mx-auto">Verifica tu búsqueda o vuelve a seleccionar una categoría para ver el catálogo completo.</p>
-      <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-brand-600 text-white text-xs font-semibold rounded-xl shadow hover:bg-brand-700">
-        Restablecer filtros
-      </button>
-    </div>
-  </main>
-
-  <footer class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-stone-200 shadow-2xl p-3 z-40">
-    <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center text-lg font-bold">
-          <i class="fa-solid fa-cart-shopping"></i>
-        </div>
-        <div>
-          <div class="text-xs text-stone-500 font-medium">
-            <span id="footerItemCount" class="font-bold text-stone-800">0</span> seleccionados
-          </div>
-          <div class="text-base sm:text-lg font-black text-brand-700 leading-none" id="footerTotalDisplay">
-            $0 COP
-          </div>
-        </div>
-      </div>
-
-      <button 
-        id="btnViewOrder" 
-        onclick="openCartModal()" 
-        class="bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-bold py-3 px-5 sm:px-8 rounded-xl shadow-lg shadow-brand-600/30 flex items-center gap-2 text-sm sm:text-base transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-        <span>Ver Carrito y Pagar</span>
-        <i class="fa-solid fa-arrow-right text-xs"></i>
-      </button>
-    </div>
-  </footer>
-
-  <div id="cartModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-    <div 
-      id="cartPanel" 
-      class="bg-white w-full max-w-lg h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
-      
-      <!-- Modal Header -->
-      <div class="p-4 border-b border-stone-200 flex items-center justify-between bg-stone-50">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-brand-500 text-white flex items-center justify-center text-sm">
-            <i class="fa-solid fa-bag-shopping"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-stone-800 leading-tight">Tu Canasta de Compra</h3>
-            <p class="text-xs text-stone-500">San Isidro · Venta directa del campo</p>
-          </div>
-        </div>
-        <button 
-          onclick="closeCartModal()" 
-          class="w-8 h-8 rounded-lg hover:bg-stone-200 flex items-center justify-center text-stone-500 hover:text-stone-800 transition-colors">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-
-      <!-- Modal Body (Cart Items + Order Form) -->
-      <div class="flex-1 overflow-y-auto p-4 custom-scroll space-y-6">
-        
-        <!-- Cart Items List Container -->
-        <section>
-          <div class="flex items-center justify-between mb-2">
-            <h4 class="text-xs font-bold text-stone-500 uppercase tracking-wider">Productos Seleccionados</h4>
-            <button onclick="clearEntireCart()" class="text-xs text-red-500 hover:underline font-semibold" id="clearCartBtn">
-              Vaciar carrito
-            </button>
-          </div>
-
-          <div id="cartItemsList" class="space-y-2.5">
-            <!-- Rendered by JS -->
-          </div>
-
-          <!-- Empty Cart Message -->
-          <div id="cartEmptyState" class="py-10 text-center text-stone-400 space-y-2">
-            <i class="fa-solid fa-basket-shopping text-4xl text-stone-300"></i>
-            <p class="text-sm font-medium">Tu canasta está vacía todavía.</p>
-            <p class="text-xs text-stone-400">Agrega aguacates, frutas o verduras para comenzar tu pedido.</p>
-          </div>
-        </section>
-
-        <!-- Pricing Summary Box -->
-        <section id="orderCostBox" class="hidden bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-2">
-          <div class="flex justify-between text-xs text-stone-600">
-            <span>Subtotal de productos</span>
-            <span id="summarySubtotal">$0 COP</span>
-          </div>
-          <div class="flex justify-between text-xs text-stone-600">
-            <span class="flex items-center gap-1">
-              <span>Costo de Domicilio</span>
-              <i class="fa-solid fa-circle-info text-stone-400 text-[10px]" title="Se coordina según tu barrio/sector"></i>
-            </span>
-            <span class="text-emerald-700 font-medium">A convenir / Por peso</span>
-          </div>
-          <div class="border-t border-stone-200 pt-2 flex justify-between items-baseline font-bold text-stone-900">
-            <span class="text-sm">Total Estimado</span>
-            <span class="text-xl text-brand-700 font-extrabold" id="summaryTotal">$0 COP</span>
-          </div>
-        </section>
-
-        <!-- Checkout Information Form -->
-        <form id="orderForm" onsubmit="submitOrderToWhatsApp(event)" class="space-y-4">
-          <h4 class="text-xs font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-truck-ramp-box text-brand-600"></i> Datos de Entrega y Pago
-          </h4>
-
-          <div>
-            <label for="custName" class="block text-xs font-semibold text-stone-700 mb-1">Nombre y Apellido *</label>
-            <input 
-              type="text" 
-              id="custName" 
-              required 
-              placeholder="Ej: Claudia Ramírez" 
-              class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-            />
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label for="custPhone" class="block text-xs font-semibold text-stone-700 mb-1">Teléfono de contacto *</label>
-              <input 
-                type="tel" 
-                id="custPhone" 
-                required 
-                placeholder="Ej: 312 000 0000" 
-                class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-              />
-            </div>
-            <div>
-              <label for="custCity" class="block text-xs font-semibold text-stone-700 mb-1">Municipio / Ciudad *</label>
-              <input 
-                type="text" 
-                id="custCity" 
-                required 
-                placeholder="Ej: Medellín / Envigado" 
-                value="Medellín"
-                class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label for="custAddress" class="block text-xs font-semibold text-stone-700 mb-1">Dirección y Barrio *</label>
-            <input 
-              type="text" 
-              id="custAddress" 
-              required 
-              placeholder="Ej: Calle 10 # 43E - 20, Apto 402, Barrio El Poblado" 
-              class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-            />
-          </div>
-
-          <!-- Payment Method Radios -->
-          <div>
-            <label class="block text-xs font-semibold text-stone-700 mb-1.5">Escoge tu Medio de Pago *</label>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Nequi" checked class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-purple-700 inline-block"></span> Nequi
-                </span>
-              </label>
-
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Daviplata" class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 inline-block"></span> Daviplata
-                </span>
-              </label>
-
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Transferencia Bancolombia" class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Bancolombia
-                </span>
-              </label>
-
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Efectivo Contraentrega" class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span> Efectivo
-                </span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Notes -->
-          <div>
-            <label for="custNotes" class="block text-xs font-semibold text-stone-700 mb-1">Instrucciones o maduración preferida (Opcional)</label>
-            <textarea 
-              id="custNotes" 
-              rows="2" 
-              placeholder="Ej: Aguacates punto medio para el fin de semana, dejar en portería." 
-              class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none resize-none"></textarea>
-          </div>
-
-          <!-- Action Button inside modal -->
-          <div class="pt-2">
-            <button 
-              type="submit" 
-              id="btnConfirmOrder" 
-              class="w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 text-base transition-all duration-150">
-              <i class="fa-brands fa-whatsapp text-2xl"></i>
-              <span>Confirmar Pedido a WhatsApp</span>
-            </button>
-            <p class="text-[11px] text-stone-500 text-center mt-2">
-              Se abrirá tu WhatsApp con el mensaje estructurado listo para enviar al <strong>315 107 2639</strong>.
-            </p>
-          </div>
-        </form>
-
-      </div>
-    </div>
+    <div class="catalog-grid" id="catalogGrid"></div>
   </div>
 
-  <div 
-    id="toastNotification" 
-    class="fixed top-5 right-5 z-50 bg-stone-900 text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 translate-y-[-100px] opacity-0 pointer-events-none">
-    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-    <span id="toastMessage">Producto agregado al carrito</span>
+  <!-- Barra Flotante Carrito -->
+  <div class="floating-cart-bar">
+    <div class="cart-summary">
+      <span id="cartCount">0</span> ítems | <span id="cartTotalDisplay">$0</span>
+    </div>
+    <button class="btn-view-cart" onclick="toggleCart()">Ver Pedido</button>
+  </div>
+
+  <!-- Modal Checkout -->
+  <div class="modal" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Detalle de tu Pedido</h2>
+        <button class="close-btn" onclick="toggleCart()">&times;</button>
+      </div>
+
+      <div id="cartItemsList"></div>
+
+      <div style="font-size: 1.1rem; font-weight: bold; text-align: right; margin-top: 0.8rem; color: var(--primary);">
+        Total a Pagar: <span id="modalCartTotal">$0</span>
+      </div>
+
+      <form class="checkout-form" id="orderForm" onsubmit="sendWhatsAppOrder(event)">
+        <div>
+          <label>Nombre Completo:</label>
+          <input type="text" id="custName" required placeholder="Ej: Pedro González" />
+        </div>
+        <div>
+          <label>Dirección de Entrega:</label>
+          <input type="text" id="custAddress" required placeholder="Ej: Calle 15 # 24-10" />
+        </div>
+        <div>
+          <label>Medio de Pago:</label>
+          <select id="custPayment" required>
+            <option value="Nequi">Nequi</option>
+            <option value="Daviplata">Daviplata</option>
+            <option value="Efectivo contraentrega">Efectivo contraentrega</option>
+            <option value="Transferencia Bancolombia">Transferencia Bancolombia</option>
+          </select>
+        </div>
+        <div>
+          <label>Notas adicionales (opcional):</label>
+          <textarea id="custNotes" rows="2" placeholder="Ej: Traer bien maduros, cambio de billete de $50.000"></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit-order">
+          Confirmar y Enviar a WhatsApp
+        </button>
+      </form>
+    </div>
   </div>
 
   <script>
-    // Business Destination Configuration
-    const BUSINESS_WHATSAPP = "573151072639";
-    const BUSINESS_NAME = "San Isidro - Venta directa del campo al mercado";
+    const WHATSAPP_NUMBER = "573151072639";
 
-    // Products Database (Local campesino catalogue with real images and weights)
-    const CATALOG = [
-      {
-        id: 1,
-        name: "Aguacate Hass San Isidro",
-        category: "frutas",
-        unit: "Kilo (aprox. 4 unidades)",
-        price: 7800,
-        badge: "Especialidad",
-        img: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80",
-        description: "Aguacate cremoso de exportación seleccionado en su punto."
-      },
-      {
-        id: 2,
-        name: "Papa Criolla Lavada",
-        category: "tuberculos",
-        unit: "Kilo",
-        price: 3800,
-        badge: "Fresco",
-        img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
-        description: "Papa criolla dorada suave y arenosa para ajiaco o freír."
-      },
-      {
-        id: 3,
-        name: "Tomate de Árbol",
-        category: "frutas",
-        unit: "Kilo",
-        price: 4200,
-        badge: "Cosecha Hoy",
-        img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
-        description: "Fruta jugosa para jugo tradicional o dulce casero."
-      },
-      {
-        id: 4,
-        name: "Mango Tommy Maduro",
-        category: "frutas",
-        unit: "Kilo (2-3 unidades)",
-        price: 5500,
-        badge: "Dulce",
-        img: "https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=600&q=80",
-        description: "Pulpa dulce y carnosa con poca fibra."
-      },
-      {
-        id: 5,
-        name: "Papa Pastusa Seleccionada",
-        category: "tuberculos",
-        unit: "Kilo",
-        price: 3200,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1590165482129-1b8b27698780?auto=format&fit=crop&w=600&q=80",
-        description: "Ideal para caldos, purés y sopas tradicionales."
-      },
-      {
-        id: 6,
-        name: "Limón Tahití Jugoso",
-        category: "frutas",
-        unit: "Kilo",
-        price: 3600,
-        badge: "Extra Jugo",
-        img: "https://images.unsplash.com/photo-1590502593747-42a996133562?auto=format&fit=crop&w=600&q=80",
-        description: "Cítrico fresco verde sin semillas de gran rendimiento."
-      },
-      {
-        id: 7,
-        name: "Plátano Hartón Maduro",
-        category: "frutas",
-        unit: "Kilo (aprox. 2 unidades)",
-        price: 3900,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
-        description: "Perfecto para tajadas doradas o plátano asado al horno."
-      },
-      {
-        id: 8,
-        name: "Zanahoria Tierna",
-        category: "verduras",
-        unit: "Kilo",
-        price: 2800,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=600&q=80",
-        description: "Crujiente, lavada y rica en betacaroteno natural."
-      },
-      {
-        id: 9,
-        name: "Mora de Castilla Silvestre",
-        category: "frutas",
-        unit: "Libra (500g)",
-        price: 3400,
-        badge: "Pulpas",
-        img: "https://images.unsplash.com/photo-1577069808021-512a8335099a?auto=format&fit=crop&w=600&q=80",
-        description: "Sabor intenso para jugos nutritivos y mermeladas."
-      },
-      {
-        id: 10,
-        name: "Cebolla Junca / Rama",
-        category: "verduras",
-        unit: "Atado campesino",
-        price: 2500,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1518977822534-7049a61ee0c2?auto=format&fit=crop&w=600&q=80",
-        description: "Tallo fresco y oloroso indispensable para sazón criollo."
-      }
+    const products = [
+      { id: 1, name: "Limón", unit: "Kilo", price: 5000, icon: "🍋" },
+      { id: 2, name: "Piña", unit: "Kilo", price: 4800, icon: "🍍" },
+      { id: 3, name: "Yuca", unit: "Kilo", price: 3000, icon: "🥔" },
+      { id: 4, name: "Papa Pastusa (@)", unit: "Arroba (@)", price: 39000, icon: "🥔" },
+      { id: 5, name: "Papa Pastusa (Bulto)", unit: "Bulto", price: 130000, icon: "🥔" },
+      { id: 6, name: "Papa Criolla", unit: "Kilo", price: 8000, icon: "🥔" },
+      { id: 7, name: "Aguacate Hass Maduro", unit: "Kilo", price: 10000, icon: "🥑" },
+      { id: 8, name: "Manzanas L", unit: "Unidad Grande", price: 2000, icon: "🍎" },
+      { id: 9, name: "Manzanas M", unit: "Unidad Mediana", price: 1500, icon: "🍎" },
+      { id: 10, name: "Tomate de Guiso (Extra)", unit: "Kilo", price: 6000, icon: "🍅" },
+      { id: 11, name: "Tomate de Guiso (Primera)", unit: "Kilo", price: 5200, icon: "🍅" },
+      { id: 12, name: "Cebolla Cabezona Gruesa", unit: "Kilo", price: 4000, icon: "🧅" },
+      { id: 13, name: "Cebolla Cabezona Pareja", unit: "Kilo", price: 3200, icon: "🧅" },
+      { id: 14, name: "Cebolla Larga Fina", unit: "Kilo", price: 3800, icon: "🧅" },
+      { id: 15, name: "Cebolla Larga de 3 Días", unit: "Kilo", price: 2000, icon: "🧅" },
+      { id: 16, name: "Zanahoria", unit: "Kilo", price: 2000, icon: "🥕" },
+      { id: 17, name: "Habichuela", unit: "Kilo", price: 11000, icon: "🌱" },
+      { id: 18, name: "Arveja en Cáscara", unit: "Kilo", price: 9000, icon: "🫛" },
+      { id: 19, name: "Arveja Desgranada", unit: "Kilo", price: 18000, icon: "🫛" },
+      { id: 20, name: "Ahuyama", unit: "Kilo", price: 2800, icon: "🎃" },
+      { id: 21, name: "Maracuyá", unit: "Kilo", price: 7400, icon: "🍈" },
+      { id: 22, name: "Banano Criollo", unit: "Kilo", price: 2600, icon: "🍌" },
+      { id: 23, name: "Pimentones", unit: "Kilo", price: 7000, icon: "🫑" },
+      { id: 24, name: "Guayaba Fina", unit: "Kilo", price: 5400, icon: "🍐" },
+      { id: 25, name: "Guayaba para Pulpa", unit: "Kilo", price: 3500, icon: "🍐" },
+      { id: 26, name: "Cilantro", unit: "Porción", price: 2000, icon: "🌿" },
+      { id: 27, name: "Espinaca", unit: "Atao", price: 3000, icon: "🥬" },
+      { id: 28, name: "Lechuga Crespa", unit: "Atao", price: 2500, icon: "🥬" },
+      { id: 29, name: "Lechuga Batavia", unit: "Unidad", price: 3000, icon: "🥬" },
+      { id: 30, name: "Fresa Extra", unit: "Libra", price: 6000, icon: "🍓" },
+      { id: 31, name: "Fresa Primera", unit: "Libra", price: 5000, icon: "🍓" },
+      { id: 32, name: "Fresa de Jugo", unit: "Libra", price: 3000, icon: "🍓" }
     ];
 
-    // State Variables
-    let currentCategory = 'todos';
-    let searchQuery = '';
-    let cart = {}; // Format: { [productId]: quantity }
+    let cart = {};
 
-    function formatCOP(number) {
-      return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        maximumFractionDigits: 0
-      }).format(number);
-    }
-
-    function renderCatalog() {
-      const grid = document.getElementById('productGrid');
-      const emptyState = document.getElementById('noResultsState');
-      
-      const filtered = CATALOG.filter(item => {
-        const matchesCategory = (currentCategory === 'todos') || (item.category === currentCategory);
-        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.unit.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-      });
-
-      document.getElementById('visibleCount').textContent = filtered.length;
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        emptyState.classList.remove('hidden');
+    function renderCatalog(items = products) {
+      const grid = document.getElementById("catalogGrid");
+      if (items.length === 0) {
+        grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777;">No se encontraron productos.</p>`;
         return;
-      } else {
-        emptyState.classList.add('hidden');
       }
-
-      grid.innerHTML = filtered.map(item => {
-        const qtyInCart = cart[item.id] || 0;
-        return `
-          <div class="bg-white rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden group">
-            <!-- Product Image Frame -->
-            <div class="relative w-full h-36 sm:h-44 bg-stone-100 overflow-hidden">
-              <img 
-                src="${item.img}" 
-                alt="${item.name}" 
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                onerror="this.onerror=null; this.src='https://placehold.co/400x300/2d6a4f/ffffff?text=${encodeURIComponent(item.name)}';"
-              />
-              ${item.badge ? `
-                <span class="absolute top-2 left-2 bg-brand-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
-                  ${item.badge}
-                </span>
-              ` : ''}
-              <span class="absolute bottom-2 right-2 bg-stone-900/75 backdrop-blur-sm text-white text-[11px] font-medium px-2 py-0.5 rounded-md">
-                ${item.unit}
-              </span>
-            </div>
-
-            <!-- Content -->
-            <div class="p-3.5 flex-1 flex flex-col justify-between">
-              <div>
-                <h4 class="font-bold text-sm sm:text-base text-stone-900 leading-snug line-clamp-1 group-hover:text-brand-700 transition-colors">
-                  ${item.name}
-                </h4>
-                <p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">
-                  ${item.description}
-                </p>
-              </div>
-
-              <div class="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between gap-2">
-                <div>
-                  <span class="text-[10px] uppercase font-bold text-stone-400 block leading-none">Precio</span>
-                  <span class="text-sm sm:text-base font-extrabold text-brand-700">
-                    ${formatCOP(item.price)}
-                  </span>
-                </div>
-
-                <!-- Add to cart control or Stepper -->
-                <div>
-                  ${qtyInCart > 0 ? `
-                    <div class="flex items-center bg-brand-50 border border-brand-300 rounded-xl p-0.5 shadow-sm">
-                      <button 
-                        onclick="updateCartItemQty(${item.id}, -1)" 
-                        class="w-7 h-7 rounded-lg bg-white text-brand-800 hover:bg-brand-600 hover:text-white font-bold text-sm flex items-center justify-center transition-colors">
-                        -
-                      </button>
-                      <span class="px-2 text-xs font-bold text-brand-800">${qtyInCart}</span>
-                      <button 
-                        onclick="updateCartItemQty(${item.id}, 1)" 
-                        class="w-7 h-7 rounded-lg bg-brand-600 text-white hover:bg-brand-700 font-bold text-sm flex items-center justify-center transition-colors">
-                        +
-                      </button>
-                    </div>
-                  ` : `
-                    <button 
-                      onclick="addToCart(${item.id})" 
-                      class="bg-brand-600 hover:bg-brand-700 active:scale-90 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm shadow-brand-600/30 transition-all">
-                      <i class="fa-solid fa-cart-plus"></i>
-                      <span class="hidden xs:inline">Agregar</span>
-                    </button>
-                  `}
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
+      grid.innerHTML = items.map(p => `
+        <div class="product-card">
+          <div class="product-icon">${p.icon}</div>
+          <div class="product-title">${p.name}</div>
+          <div class="product-unit">${p.unit}</div>
+          <div class="product-price">$${p.price.toLocaleString("es-CO")}</div>
+          <button class="btn-add" onclick="addToCart(${p.id})">Agregar</button>
+        </div>
+      `).join("");
     }
 
-    function addToCart(productId) {
-      cart[productId] = (cart[productId] || 0) + 1;
-      const product = CATALOG.find(p => p.id === productId);
-      showToast(`+1 ${product.name} agregado`);
-      refreshUI();
+    function filterProducts() {
+      const query = document.getElementById("searchInput").value.toLowerCase();
+      const filtered = products.filter(p => p.name.toLowerCase().includes(query));
+      renderCatalog(filtered);
     }
 
-    function updateCartItemQty(productId, change) {
-      if (!cart[productId]) return;
-      cart[productId] += change;
-      if (cart[productId] <= 0) {
-        delete cart[productId];
-      }
-      refreshUI();
+    function addToCart(id) {
+      cart[id] = (cart[id] || 0) + 1;
+      updateCartUI();
     }
 
-    function clearEntireCart() {
-      if (Object.keys(cart).length === 0) return;
-      cart = {};
-      refreshUI();
-      showToast('Canasta vaciada');
+    function changeQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id] += delta;
+      if (cart[id] <= 0) delete cart[id];
+      updateCartUI();
     }
 
-    function refreshUI() {
-      renderCatalog();
-      renderCartDrawer();
-      updateFooterBar();
-    }
-
-    function calculateTotals() {
+    function updateCartUI() {
       let count = 0;
       let total = 0;
-      for (const id in cart) {
-        const qty = cart[id];
-        const item = CATALOG.find(p => p.id == id);
-        if (item) {
+      const list = document.getElementById("cartItemsList");
+      list.innerHTML = "";
+
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        list.innerHTML = "<p style='color: #777; text-align: center; margin: 1.5rem 0;'>El carrito está vacío.</p>";
+      } else {
+        keys.forEach(id => {
+          const prod = products.find(p => p.id == id);
+          const qty = cart[id];
+          const subtotal = prod.price * qty;
           count += qty;
-          total += item.price * qty;
-        }
+          total += subtotal;
+
+          const itemDiv = document.createElement("div");
+          itemDiv.className = "cart-item";
+          itemDiv.innerHTML = `
+            <div>
+              <strong>${prod.name}</strong><br>
+              <small>$${prod.price.toLocaleString("es-CO")} x ${qty} (${prod.unit})</small>
+            </div>
+            <div class="cart-item-controls">
+              <button type="button" onclick="changeQty(${prod.id}, -1)">-</button>
+              <span>${qty}</span>
+              <button type="button" onclick="changeQty(${prod.id}, 1)">+</button>
+            </div>
+          `;
+          list.appendChild(itemDiv);
+        });
       }
-      return { count, total };
+
+      document.getElementById("cartCount").textContent = count;
+      document.getElementById("cartTotalDisplay").textContent = `$${total.toLocaleString("es-CO")}`;
+      document.getElementById("modalCartTotal").textContent = `$${total.toLocaleString("es-CO")}`;
     }
 
-    function updateFooterBar() {
-      const { count, total } = calculateTotals();
-      const badge = document.getElementById('cartHeaderBadge');
-      const footerCount = document.getElementById('footerItemCount');
-      const footerTotal = document.getElementById('footerTotalDisplay');
-      const btnView = document.getElementById('btnViewOrder');
-
-      footerCount.textContent = count;
-      footerTotal.textContent = formatCOP(total);
-
-      if (count > 0) {
-        badge.textContent = count;
-        badge.classList.remove('hidden');
-        badge.classList.add('badge-pop');
-        btnView.disabled = false;
-      } else {
-        badge.classList.add('hidden');
-        btnView.disabled = true;
-      }
+    function toggleCart() {
+      document.getElementById("cartModal").classList.toggle("active");
     }
 
-    function renderCartDrawer() {
-      const container = document.getElementById('cartItemsList');
-      const emptyState = document.getElementById('cartEmptyState');
-      const costBox = document.getElementById('orderCostBox');
-      const clearBtn = document.getElementById('clearCartBtn');
-      const confirmBtn = document.getElementById('btnConfirmOrder');
-      
-      const { count, total } = calculateTotals();
-      const ids = Object.keys(cart);
-
-      if (ids.length === 0) {
-        container.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        costBox.classList.add('hidden');
-        clearBtn.classList.add('hidden');
-        confirmBtn.disabled = true;
-        confirmBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    function sendWhatsAppOrder(e) {
+      e.preventDefault();
+      const keys = Object.keys(cart);
+      if (keys.length === 0) {
+        alert("Agrega al menos un producto al carrito antes de confirmar el pedido.");
         return;
       }
 
-      emptyState.classList.add('hidden');
-      costBox.classList.remove('hidden');
-      clearBtn.classList.remove('hidden');
-      confirmBtn.disabled = false;
-      confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      const name = document.getElementById("custName").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const payment = document.getElementById("custPayment").value;
+      const notes = document.getElementById("custNotes").value.trim();
 
-      container.innerHTML = ids.map(id => {
-        const item = CATALOG.find(p => p.id == id);
+      let total = 0;
+      let text = `🛒 *NUEVO PEDIDO - SAN ISIDRO*\n`;
+      text += `---------------------------------\n`;
+      text += `👤 *Cliente:* ${name}\n`;
+      text += `📍 *Dirección:* ${address}\n`;
+      text += `💳 *Método de Pago:* ${payment}\n`;
+      if (notes) text += `📝 *Notas:* ${notes}\n`;
+      text += `---------------------------------\n`;
+      text += `*PRODUCTOS:*\n`;
+
+      keys.forEach(id => {
+        const prod = products.find(p => p.id == id);
         const qty = cart[id];
-        const lineTotal = item.price * qty;
-
-        return `
-          <div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200/80 gap-3">
-            <img 
-              src="${item.img}" 
-              alt="${item.name}" 
-              class="w-12 h-12 rounded-lg object-cover bg-stone-200 flex-shrink-0"
-              onerror="this.src='https://placehold.co/100x100/2d6a4f/ffffff?text=Prod';"
-            />
-            <div class="flex-1 min-w-0">
-              <div class="font-bold text-xs sm:text-sm text-stone-800 truncate">${item.name}</div>
-              <div class="text-[11px] text-stone-500">${formatCOP(item.price)} × ${qty} ${item.unit}</div>
-              <div class="text-xs font-extrabold text-brand-700">${formatCOP(lineTotal)}</div>
-            </div>
-            <div class="flex items-center bg-white border border-stone-300 rounded-lg p-0.5">
-              <button 
-                type="button"
-                onclick="updateCartItemQty(${item.id}, -1)" 
-                class="w-6 h-6 rounded text-stone-600 hover:bg-stone-200 font-bold flex items-center justify-center text-xs">
-                -
-              </button>
-              <span class="px-2 text-xs font-bold text-stone-800">${qty}</span>
-              <button 
-                type="button"
-                onclick="updateCartItemQty(${item.id}, 1)" 
-                class="w-6 h-6 rounded bg-brand-600 text-white font-bold flex items-center justify-center text-xs">
-                +
-              </button>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      document.getElementById('summarySubtotal').textContent = formatCOP(total);
-      document.getElementById('summaryTotal').textContent = formatCOP(total);
-    }
-
-    function filterCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.category-btn').forEach(btn => {
-        if (btn.getAttribute('data-category') === cat) {
-          btn.className = "category-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-brand-600 text-white shadow-sm shadow-brand-500/30";
-        } else {
-          btn.className = "category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50";
-        }
+        const subtotal = prod.price * qty;
+        total += subtotal;
+        text += `• ${prod.name} (${prod.unit}) x ${qty} = $${subtotal.toLocaleString("es-CO")}\n`;
       });
-      renderCatalog();
+
+      text += `---------------------------------\n`;
+      text += `*TOTAL A PAGAR: $${total.toLocaleString("es-CO")}*`;
+
+      const encoded = encodeURIComponent(text);
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encoded}`, "_blank");
     }
 
-    function handleSearch(val) {
-      searchQuery = val.trim();
-      const clearBtn = document.getElementById('clearSearchBtn');
-      if (searchQuery.length > 0) {
-        clearBtn.classList.remove('hidden');
-      } else {
-        clearBtn.classList.add('hidden');
-      }
-      renderCatalog();
-    }
-
-    function clearSearch() {
-      const input = document.getElementById('searchInput');
-      input.value = '';
-      searchQuery = '';
-      document.getElementById('clearSearchBtn').classList.add('hidden');
-      renderCatalog();
-      input.focus();
-    }
-
-    function resetFilters() {
-      clearSearch();
-      filterCategory('todos');
-    }
-
-    function openCartModal() {
-      const modal = document.getElementById('cartModal');
-      const panel = document.getElementById('cartPanel');
-      modal.classList.remove('pointer-events-none', 'opacity-0');
-      modal.classList.add('opacity-100');
-      panel.classList.remove('translate-x-full');
-      document.body.classList.add('overflow-hidden');
-    }
-
-    function closeCartModal() {
-      const modal = document.getElementById('cartModal');
-      const panel = document.getElementById('cartPanel');
-      panel.classList.add('translate-x-full');
-      modal.classList.add('opacity-0');
-      setTimeout(() => {
-        modal.classList.add('pointer-events-none');
-        document.body.classList.remove('overflow-hidden');
-      }, 300);
-    }
-
-    // Close on backdrop click
-    document.getElementById('cartModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeCartModal();
-      }
-    });
-
-    let toastTimer = null;
-    function showToast(message) {
-      const toast = document.getElementById('toastNotification');
-      const msg = document.getElementById('toastMessage');
-      msg.textContent = message;
-      
-      clearTimeout(toastTimer);
-      toast.classList.remove('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
-      }, 2200);
-    }
-
-    function submitOrderToWhatsApp(event) {
-      event.preventDefault();
-      
-      const { count, total } = calculateTotals();
-      if (count === 0) {
-        showToast('Selecciona al menos un producto');
-        return;
-      }
-
-      // Gather form values
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const city = document.getElementById('custCity').value.trim();
-      const address = document.getElementById('custAddress').value.trim();
-      const notes = document.getElementById('custNotes').value.trim();
-      
-      const paymentRadio = document.querySelector('input[name="paymentMethod"]:checked');
-      const paymentMethod = paymentRadio ? paymentRadio.value : 'A acordar';
-
-      // Assemble WhatsApp message string with Markdown
-      let message = `🌾 *PEDIDO NUEVO - SAN ISIDRO*\n`;
-      message += `_Venta directa del campo al mercado_\n`;
-      message += `-------------------------------------------\n`;
-      message += `👤 *Cliente:* ${name}\n`;
-      message += `📱 *Teléfono:* ${phone}\n`;
-      message += `📍 *Ciudad/Municipio:* ${city}\n`;
-      message += `🏠 *Dirección:* ${address}\n`;
-      message += `💳 *Medio de Pago:* ${paymentMethod}\n`;
-      if (notes) {
-        message += `📝 *Observaciones:* ${notes}\n`;
-      }
-      message += `-------------------------------------------\n`;
-      message += `📦 *DETALLE DE LA COSECHA:*\n`;
-
-      for (const id in cart) {
-        const item = CATALOG.find(p => p.id == id);
-        const qty = cart[id];
-        const lineTotal = item.price * qty;
-        message += `• *${item.name}* (${item.unit})\n`;
-        message += `   ↳ Cantidad: ${qty} | Subtotal: ${formatCOP(lineTotal)}\n`;
-      }
-
-      message += `-------------------------------------------\n`;
-      message += `💰 *VALOR TOTAL PRODUCTOS:* *${formatCOP(total)}*\n`;
-      message += `🚚 *Domicilio:* A convenir con el cliente\n\n`;
-      message += `Hola, acabo de armar mi pedido en el catálogo virtual de San Isidro. ¿Me confirman disponibilidad para el despacho? ¡Gracias!`;
-
-      // Format URL
-      const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encodedMsg}`;
-
-      // Open WhatsApp chat in new window
-      window.open(whatsappUrl, '_blank');
-    }
-
-    // Initialize application on load
-    document.addEventListener('DOMContentLoaded', () => {
-      refreshUI();
-    });
+    renderCatalog();
   </script>
 </body>
 </html>
