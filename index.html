@@ -1,1013 +1,934 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>San Isidro | Del Campo al Mercado</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Mayorista San Isidro - Venta Directa del Campo al Mercado</title>
   
-  <!-- Tailwind CSS CDN -->
+  <!-- Tailwind CSS & Google Fonts -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#f2fbf5',
-              100: '#e1f7e9',
-              500: '#1b7a43',
-              600: '#156736',
-              700: '#11522a',
-              800: '#0c3e1f',
-              accent: '#d97706',
-              gold: '#eab308'
+            field: {
+              50: '#f2f9f1',
+              100: '#e1f2df',
+              200: '#c4e6c1',
+              500: '#2e7d32',
+              600: '#1e6822',
+              700: '#1b5e20',
+              800: '#134718',
+              900: '#0c300f'
+            },
+            ribbon: {
+              600: '#b91c1c',
+              700: '#991b1b',
+              800: '#7f1d1d',
+              900: '#5a0f0f'
+            },
+            harvest: {
+              gold: '#eab308',
+              amber: '#d97706',
+              warm: '#fffbeb'
             }
           },
           fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            serif: ['Georgia', 'Cambria', 'serif']
+            outfit: ['Outfit', 'sans-serif'],
+            sans: ['Plus Jakarta Sans', 'sans-serif']
           }
         }
       }
     }
   </script>
-  
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,600&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
+    * {
       -webkit-tap-highlight-color: transparent;
+      box-sizing: border-box;
     }
-    .custom-scroll::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
+    body {
+      background-color: #f8faf5;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: #1e293b;
+      overscroll-behavior-y: contain;
     }
-    .custom-scroll::-webkit-scrollbar-thumb {
-      background-color: #cbd5e1;
-      border-radius: 9999px;
+    h1, h2, h3, .font-heading {
+      font-family: 'Outfit', sans-serif;
     }
-    .badge-pop {
-      animation: pop 0.25s ease-out;
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
     }
-    @keyframes pop {
-      0% { transform: scale(0.8); }
-      50% { transform: scale(1.25); }
-      100% { transform: scale(1); }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .hero-pattern {
+      background: linear-gradient(135deg, #134718 0%, #1b5e20 65%, #0c300f 100%);
+      background-image: 
+        radial-gradient(circle at 20% 30%, rgba(234, 179, 8, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(46, 125, 50, 0.3) 0%, transparent 50%);
+    }
+    .custom-shadow {
+      box-shadow: 0 4px 20px -2px rgba(27, 94, 32, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .badge-ribbon {
+      background: linear-gradient(135deg, #b91c1c 0%, #7f1d1d 100%);
+    }
+    @keyframes slideInUp {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .animate-pop {
+      animation: slideInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
   </style>
 </head>
-<body class="bg-stone-100 text-stone-900 pb-28 min-h-screen selection:bg-brand-500 selection:text-white">
+<body class="antialiased selection:bg-field-600 selection:text-white">
 
-  <header class="bg-white border-b border-stone-200 sticky top-0 z-30 shadow-sm backdrop-blur-md bg-white/90">
-    <div class="max-w-5xl mx-auto px-4 py-2.5 flex items-center justify-between">
-      <div class="flex items-center space-x-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-        <div class="relative w-12 h-12 rounded-full border-2 border-brand-500 shadow-md flex items-center justify-center bg-gradient-to-tr from-amber-700 via-amber-500 to-green-600 text-white overflow-hidden p-0.5">
-          <img 
-            src="logo.png" 
-            alt="San Isidro" 
-            id="headerLogoImg" 
-            class="w-full h-full object-cover rounded-full hidden" 
-            onload="this.classList.remove('hidden'); document.getElementById('headerLogoFallback').classList.add('hidden');"
-            onerror="this.classList.add('hidden'); document.getElementById('headerLogoFallback').classList.remove('hidden');"
-          />
-          <div id="headerLogoFallback" class="flex flex-col items-center justify-center text-xs font-bold leading-tight text-center text-white">
-            <i class="fa-solid fa-seedling text-base"></i>
-            <span class="text-[9px] uppercase tracking-tighter">Campo</span>
+  <!-- Top Announcement Bar -->
+  <div class="bg-ribbon-800 text-amber-100 text-xs py-1.5 px-3 text-center font-bold tracking-wide flex items-center justify-center gap-2 border-b border-ribbon-900 shadow-sm">
+    <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+    <span>¡Cosecha fresca de hoy! Despachos mayoristas y al detal directos a tu negocio o casa</span>
+  </div>
+
+  <!-- Header with Illustrated Farm Logo Emblem -->
+  <header class="hero-pattern text-white border-b-4 border-harvest-gold shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 sm:py-5 flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Brand & Emblem -->
+      <div class="flex items-center gap-3.5 sm:gap-5 w-full md:w-auto justify-between md:justify-start">
+        <div class="flex items-center gap-3">
+          <!-- Illustrated Farm Logo Emblem -->
+          <div class="relative flex-shrink-0 group cursor-pointer" onclick="resetFilters()">
+            <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-gradient-to-tr from-amber-500 via-amber-300 to-amber-600 shadow-2xl flex items-center justify-center border-2 border-amber-200/60">
+              <svg viewBox="0 0 200 200" class="w-full h-full rounded-full shadow-inner overflow-hidden" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="skyGrad" cx="50%" cy="30%" r="70%">
+                    <stop offset="0%" stop-color="#bae6fd" />
+                    <stop offset="50%" stop-color="#7dd3fc" />
+                    <stop offset="100%" stop-color="#4ade80" />
+                  </radialGradient>
+                  <linearGradient id="hillGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#84cc16" />
+                    <stop offset="100%" stop-color="#15803d" />
+                  </linearGradient>
+                  <linearGradient id="hatGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fde047" />
+                    <stop offset="100%" stop-color="#ca8a04" />
+                  </linearGradient>
+                  <linearGradient id="skinGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#fed7aa" />
+                    <stop offset="100%" stop-color="#fba471" />
+                  </linearGradient>
+                  <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#b91c1c" />
+                    <stop offset="100%" stop-color="#6b0f0f" />
+                  </linearGradient>
+                  <linearGradient id="avocadoGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#a3e635" />
+                    <stop offset="100%" stop-color="#3f6212" />
+                  </linearGradient>
+                  <linearGradient id="avocadoPit" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#b45309" />
+                    <stop offset="100%" stop-color="#78350f" />
+                  </linearGradient>
+                </defs>
+
+                <!-- Circular Frame Background -->
+                <circle cx="100" cy="100" r="96" fill="#0f3915" stroke="#f59e0b" stroke-width="4"/>
+                <circle cx="100" cy="100" r="90" fill="url(#skyGrad)" />
+
+                <!-- Mountain Slopes & Coffee/Avocado Hills -->
+                <path d="M-10 140 Q 50 80, 120 120 T 210 110 L 210 200 L -10 200 Z" fill="url(#hillGrad)" />
+                <path d="M-10 160 Q 60 130, 140 150 T 210 145 L 210 200 L -10 200 Z" fill="#166534" opacity="0.8" />
+
+                <!-- Don Isidro Character -->
+                <g id="farmer">
+                  <!-- Poncho / Clothes -->
+                  <path d="M 45 190 Q 100 145, 155 190 L 165 210 L 35 210 Z" fill="#78350f" stroke="#451a03" stroke-width="2"/>
+                  <!-- Poncho collar scarf (red plaid) -->
+                  <path d="M 75 142 L 100 162 L 125 142 L 115 132 L 85 132 Z" fill="#dc2626" stroke="#fff" stroke-width="1.5"/>
+                  
+                  <!-- Neck & Face -->
+                  <rect x="90" y="125" width="20" height="15" fill="url(#skinGrad)" rx="3"/>
+                  <ellipse cx="100" cy="105" rx="25" ry="28" fill="url(#skinGrad)"/>
+
+                  <!-- Smiling Eyes & Wrinkles of Joy -->
+                  <path d="M 85 96 Q 91 91, 95 96" stroke="#451a03" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  <path d="M 105 96 Q 109 91, 115 96" stroke="#451a03" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                  
+                  <!-- Cheeks / Blush -->
+                  <circle cx="83" cy="106" r="4" fill="#f87171" opacity="0.6"/>
+                  <circle cx="117" cy="106" r="4" fill="#f87171" opacity="0.6"/>
+
+                  <!-- White Mustache & Grin -->
+                  <path d="M 88 116 Q 100 124, 112 116 Q 100 121, 88 116" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+                  <path d="M 78 113 Q 92 110, 100 115 Q 108 110, 122 113 Q 107 122, 100 117 Q 93 122, 78 113" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+
+                  <!-- Straw Hat (Sombrero de Paja Paisa) -->
+                  <ellipse cx="100" cy="80" rx="46" ry="15" fill="url(#hatGrad)" stroke="#a16207" stroke-width="2"/>
+                  <!-- Hat Crown -->
+                  <path d="M 75 78 C 75 52, 125 52, 125 78 Z" fill="url(#hatGrad)" stroke="#a16207" stroke-width="2"/>
+                  <!-- Hat Black Ribbon -->
+                  <path d="M 74 74 C 84 71, 116 71, 126 74 L 125 78 C 115 75, 85 75, 75 78 Z" fill="#18181b"/>
+                </g>
+
+                <!-- Foreground Hass Avocados in front -->
+                <g id="avocados" transform="translate(0, 5)">
+                  <!-- Left Half Avocado -->
+                  <g transform="translate(56, 142) rotate(-15)">
+                    <ellipse cx="0" cy="0" rx="16" ry="22" fill="#14532d" stroke="#facc15" stroke-width="1.5"/>
+                    <ellipse cx="0" cy="0" rx="14" ry="19" fill="url(#avocadoGreen)"/>
+                    <ellipse cx="0" cy="0" rx="10" ry="13" fill="#fef08a"/>
+                    <circle cx="0" cy="2" r="7.5" fill="url(#avocadoPit)" stroke="#451a03" stroke-width="1"/>
+                    <ellipse cx="-2" cy="-1" rx="2" ry="3" fill="#fbbf24" opacity="0.6"/>
+                  </g>
+
+                  <!-- Right Half Avocado -->
+                  <g transform="translate(144, 142) rotate(15)">
+                    <ellipse cx="0" cy="0" rx="16" ry="22" fill="#14532d" stroke="#facc15" stroke-width="1.5"/>
+                    <ellipse cx="0" cy="0" rx="14" ry="19" fill="url(#avocadoGreen)"/>
+                    <ellipse cx="0" cy="0" rx="10" ry="13" fill="#fef08a"/>
+                    <circle cx="0" cy="2" r="7.5" fill="url(#avocadoPit)" stroke="#451a03" stroke-width="1"/>
+                    <ellipse cx="-2" cy="-1" rx="2" ry="3" fill="#fbbf24" opacity="0.6"/>
+                  </g>
+
+                  <!-- Center Avocado Open Hass -->
+                  <g transform="translate(100, 148)">
+                    <ellipse cx="0" cy="0" rx="19" ry="25" fill="#14532d" stroke="#fde047" stroke-width="2"/>
+                    <ellipse cx="0" cy="0" rx="16.5" ry="22" fill="url(#avocadoGreen)"/>
+                    <ellipse cx="0" cy="2" rx="12" ry="16" fill="#fef08a"/>
+                    <circle cx="0" cy="4" r="9" fill="url(#avocadoPit)" stroke="#451a03" stroke-width="1.5"/>
+                    <circle cx="-3" cy="1" r="2.5" fill="#fde68a" opacity="0.8"/>
+                  </g>
+                </g>
+
+                <!-- Gold Ring & Rivets -->
+                <circle cx="100" cy="100" r="94" fill="none" stroke="#fef08a" stroke-width="1" stroke-dasharray="3, 4"/>
+              </svg>
+              <!-- Star accent -->
+              <div class="absolute -top-1 right-0 text-amber-300 text-xs">
+                <i class="fa-solid fa-certificate"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Titles & Slogan -->
+          <div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/40 border border-amber-400/50 text-amber-300 text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-0.5">
+              <i class="fa-solid fa-leaf text-emerald-400"></i> Mayorista Campesino
+            </div>
+            <h1 class="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-white flex items-center gap-2">
+              SAN ISIDRO
+            </h1>
+            <p class="text-xs sm:text-sm text-amber-200 font-bold tracking-wide flex items-center gap-1">
+              <span>Venta directa del campo al mercado</span>
+            </p>
           </div>
         </div>
-        <div>
-          <h1 class="text-xl font-bold tracking-tight text-brand-700 flex items-center gap-1.5 leading-none font-serif">
-            SAN ISIDRO
-            <span class="text-[11px] font-sans font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full uppercase tracking-wider">100% Natural</span>
-          </h1>
-          <p class="text-xs text-stone-500 font-medium tracking-wide">Venta directa del campo al mercado</p>
+
+        <!-- Header Actions: Mobile Cart Launcher & Admin Button -->
+        <div class="flex items-center gap-2">
+          <!-- Daily update modal trigger -->
+          <button 
+            onclick="openDailyManagerModal()" 
+            class="bg-white/10 hover:bg-white/20 active:scale-95 border border-white/25 text-white px-2.5 sm:px-3 py-2 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition"
+            title="Cambiar precios y stock del día">
+            <i class="fa-solid fa-pen-to-square text-amber-300"></i>
+            <span class="hidden sm:inline">Precios de Hoy</span>
+          </button>
+
+          <!-- Mobile Only Cart Open Button -->
+          <button 
+            onclick="openMobileCart()" 
+            class="lg:hidden relative bg-harvest-gold hover:bg-amber-400 text-field-900 font-black px-3.5 py-2 rounded-xl shadow-lg flex items-center gap-2 active:scale-95 transition">
+            <i class="fa-solid fa-basket-shopping text-base"></i>
+            <span id="navMobileCartCount" class="bg-ribbon-700 text-white text-[11px] px-1.5 py-0.2 rounded-full font-bold">
+              0
+            </span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Quick Search Bar inside Header -->
+      <div class="w-full md:w-80 lg:w-96">
+        <div class="relative flex items-center bg-white rounded-xl shadow-inner overflow-hidden border-2 border-amber-300/40 focus-within:border-harvest-gold">
+          <span class="pl-3.5 text-slate-400">
+            <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          </span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            oninput="handleSearch(this.value)" 
+            placeholder="Buscar aguacate, tomate, papa, bulto..." 
+            class="w-full py-2.5 pl-2.5 pr-8 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none font-medium"
+          >
+          <button id="clearSearchBtn" onclick="clearSearch()" class="hidden pr-3 text-slate-400 hover:text-slate-600 text-xs">
+            <i class="fa-solid fa-circle-xmark text-sm"></i>
+          </button>
         </div>
       </div>
 
-      <button 
-        onclick="openCartModal()" 
-        aria-label="Abrir carrito"
-        class="relative p-2.5 rounded-full bg-emerald-50 text-brand-700 hover:bg-emerald-100 transition-colors focus:outline-none focus:ring-2 focus:ring-brand-500">
-        <i class="fa-solid fa-basket-shopping text-xl"></i>
-        <span 
-          id="cartHeaderBadge" 
-          class="hidden absolute -top-1 -right-1 bg-red-600 text-white text-[11px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center shadow-md">
-          0
-        </span>
-      </button>
+    </div>
+
+    <!-- Category Pills Bar -->
+    <div class="bg-field-900/90 border-t border-field-700/70 px-4 py-2">
+      <div class="max-w-7xl mx-auto flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth" id="categoryTabs">
+        <!-- Injected via JavaScript -->
+      </div>
     </div>
   </header>
 
-  <section class="relative bg-gradient-to-br from-brand-700 via-emerald-800 to-stone-900 text-white overflow-hidden py-8 px-4 shadow-inner">
-    <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-6 relative z-10">
-      <div class="flex-1 text-center md:text-left space-y-3">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full border border-white/20 text-xs font-semibold text-amber-300">
-          <i class="fa-solid fa-truck-fast"></i> Despachos directos a tu hogar
+  <main class="max-w-7xl mx-auto px-3 sm:px-4 lg:px-6 py-5">
+    
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      
+      <!-- LEFT / MAIN: Product Catalog (takes 7 or 8 columns on desktop) -->
+      <section class="lg:col-span-7 xl:col-span-8">
+        
+        <!-- Controls & Live Indicator Bar -->
+        <div class="flex items-center justify-between bg-white rounded-xl p-3 border border-slate-200/80 mb-4 shadow-sm">
+          <div class="flex items-center gap-2 text-xs text-slate-600 font-semibold" id="catalogResultsCount">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+            <span>Cargando productos frescos...</span>
+          </div>
+
+          <div class="flex items-center gap-2 text-xs font-bold text-field-700 bg-field-50 px-2.5 py-1 rounded-lg border border-field-200">
+            <i class="fa-solid fa-truck-fast text-emerald-600"></i>
+            <span class="hidden sm:inline">Despacho desde Corabastos / Finca</span>
+            <span class="sm:hidden">Despacho directo</span>
+          </div>
         </div>
-        <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight leading-tight">
-          Frutas, Verduras y Tubérculos <span class="text-amber-400">Frescos de Origen</span>
-        </h2>
-        <p class="text-emerald-100 text-sm md:text-base max-w-xl">
-          Cosecha seleccionada de los mejores agricultores. Elige tus productos, agrega al carrito y recibe la cotización instantánea en tu WhatsApp.
-        </p>
-        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 text-xs font-medium text-emerald-200 pt-1">
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-heart text-amber-400"></i> Calidad Garantizada</span>
-          <span class="flex items-center gap-1.5"><i class="fa-solid fa-hand-holding-dollar text-amber-400"></i> Precios Justos</span>
-          <span class="flex items-center gap-1.5"><i class="fa-brands fa-whatsapp text-emerald-400"></i> Pedido Directo</span>
+
+        <!-- Product Cards Grid -->
+        <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-3 sm:gap-4">
+          <!-- Populated by JavaScript -->
         </div>
-      </div>
 
-      <div class="w-full max-w-xs bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 text-center shadow-2xl flex flex-col items-center">
-        <div class="w-24 h-24 rounded-full bg-stone-900/60 p-1 mb-2 border-2 border-amber-400 shadow-inner flex items-center justify-center overflow-hidden">
-          <img 
-            src="logo.png" 
-            alt="San Isidro Campesino" 
-            class="w-full h-full object-cover rounded-full" 
-            onerror="this.src='https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=300&q=80'"
-          />
+        <!-- Empty Results Message -->
+        <div id="noProductsFound" class="hidden bg-white rounded-2xl p-8 text-center border border-slate-200 mt-4">
+          <div class="w-16 h-16 rounded-full bg-field-50 text-field-600 flex items-center justify-center mx-auto text-2xl mb-3">
+            <i class="fa-solid fa-basket-shopping"></i>
+          </div>
+          <h3 class="font-bold text-slate-800 text-base">No se encontraron productos</h3>
+          <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Verifica que el nombre esté bien escrito o selecciona otra categoría arriba.</p>
+          <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-field-700 text-white rounded-xl text-xs font-bold hover:bg-field-800 transition shadow">
+            Mostrar Todos los Productos
+          </button>
         </div>
-        <h3 class="font-bold text-base tracking-wide text-amber-300">Hacienda San Isidro</h3>
-        <p class="text-xs text-stone-200">Aguacates especiales Hass, tubérculos y frutas de clima templado y frío.</p>
-        <div class="mt-3 text-xs bg-emerald-950/80 px-3 py-1.5 rounded-xl border border-emerald-500/40 text-emerald-200">
-          WhatsApp Oficial: <strong>+57 315 107 2639</strong>
+
+        <!-- Trust Features Footer Banner -->
+        <div class="mt-8 bg-gradient-to-r from-field-900 to-field-800 text-white rounded-2xl p-4 sm:p-5 shadow-sm grid grid-cols-2 sm:grid-cols-4 gap-4 text-center border-2 border-amber-400/40">
+          <div>
+            <i class="fa-solid fa-award text-amber-300 text-xl mb-1"></i>
+            <h4 class="text-xs font-bold text-amber-100">Calidad Seleccionada</h4>
+            <p class="text-[10px] text-emerald-200">Revisión antes de cargar</p>
+          </div>
+          <div>
+            <i class="fa-solid fa-scale-balanced text-amber-300 text-xl mb-1"></i>
+            <h4 class="text-xs font-bold text-amber-100">Peso Exacto</h4>
+            <p class="text-[10px] text-emerald-200">Báscula calibrada</p>
+          </div>
+          <div>
+            <i class="fa-brands fa-whatsapp text-emerald-400 text-xl mb-1"></i>
+            <h4 class="text-xs font-bold text-amber-100">Confirmación Rápida</h4>
+            <p class="text-[10px] text-emerald-200">WhatsApp: 315 1072639</p>
+          </div>
+          <div>
+            <i class="fa-solid fa-wallet text-amber-300 text-xl mb-1"></i>
+            <h4 class="text-xs font-bold text-amber-100">Pago Flexible</h4>
+            <p class="text-[10px] text-emerald-200">Contraentrega o Nequi</p>
+          </div>
         </div>
-      </div>
+
+      </section>
+
+      <!-- RIGHT: Persistent Desktop Order Panel (Hidden on small screens, fixed & visible on desktop lg+) -->
+      <aside class="hidden lg:block lg:col-span-5 xl:col-span-4 sticky top-4">
+        <div class="bg-white rounded-2xl border-2 border-field-200 shadow-xl overflow-hidden flex flex-col max-h-[calc(100vh-2rem)]">
+          
+          <!-- Panel Header -->
+          <div class="bg-gradient-to-r from-field-800 to-field-700 text-white p-4 flex items-center justify-between border-b border-field-900">
+            <div class="flex items-center gap-2.5">
+              <div class="w-9 h-9 rounded-xl bg-harvest-gold text-field-900 flex items-center justify-center font-black shadow">
+                <i class="fa-solid fa-basket-shopping"></i>
+              </div>
+              <div>
+                <h3 class="font-bold text-sm leading-none">Canasta de Pedido</h3>
+                <span class="text-[11px] text-amber-200 font-medium">Mayorista San Isidro</span>
+              </div>
+            </div>
+            <span id="desktopItemsBadge" class="bg-ribbon-700 text-white text-xs font-bold px-2.5 py-0.5 rounded-full border border-ribbon-600">
+              0 artículos
+            </span>
+          </div>
+
+          <!-- Items list container -->
+          <div id="desktopCartItems" class="flex-1 overflow-y-auto p-3.5 space-y-2.5 bg-slate-50/60 divide-y divide-slate-100 min-h-[160px] max-h-[300px]">
+            <!-- Injected by JS -->
+          </div>
+
+          <!-- Totals Breakdown & WhatsApp Checkout Form -->
+          <div class="bg-white p-4 border-t border-slate-200 shadow-inner">
+            
+            <!-- Summary Row -->
+            <div class="bg-harvest-warm rounded-xl p-3 border border-amber-200/70 mb-3.5">
+              <div class="flex justify-between text-xs text-slate-600 mb-1">
+                <span>Subtotal canasta:</span>
+                <span id="desktopSubtotalText" class="font-bold text-slate-800">COP$ 0</span>
+              </div>
+              <div class="flex justify-between text-xs text-field-700 font-semibold mb-1">
+                <span>Flete / Envío:</span>
+                <span class="text-[11px] bg-emerald-100 text-emerald-800 px-1.5 py-0.2 rounded font-bold">Por coordinar</span>
+              </div>
+              <div class="border-t border-amber-200/80 pt-2 mt-2 flex justify-between items-baseline">
+                <span class="text-xs font-black uppercase text-slate-800">Total a Pagar:</span>
+                <span id="desktopTotalText" class="text-lg font-black text-field-700">COP$ 0</span>
+              </div>
+            </div>
+
+            <!-- Customer Dispatch Form -->
+            <div class="space-y-2 mb-3 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-0.5 text-[11px]">Tu Nombre o Negocio *</label>
+                <input type="text" id="deskName" placeholder="Ej: Fruver El Triunfo / Doña Maria" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-0.5 text-[11px]">Dirección *</label>
+                  <input type="text" id="deskAddress" placeholder="Calle 45 # 12-30" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-0.5 text-[11px]">Barrio / Municipio *</label>
+                  <input type="text" id="deskCity" placeholder="Ej: Castilla / Soacha" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-0.5 text-[11px]">Teléfono Móvil</label>
+                  <input type="tel" id="deskPhone" placeholder="310 000 0000" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-0.5 text-[11px]">Forma de Pago</label>
+                  <select id="deskPayment" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none bg-white">
+                    <option value="Efectivo Contraentrega">Efectivo Contraentrega</option>
+                    <option value="Transferencia Nequi">Nequi</option>
+                    <option value="Daviplata">Daviplata</option>
+                    <option value="Bancolombia">Bancolombia</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block font-bold text-slate-700 mb-0.5 text-[11px]">Notas de Maduración o Entrega (Opcional)</label>
+                <input type="text" id="deskNotes" placeholder="Ej: Aguacates maduros para hoy mismo" class="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+              </div>
+            </div>
+
+            <!-- WhatsApp Direct Dispatch Button -->
+            <button 
+              onclick="dispatchWhatsAppOrder('desktop')" 
+              class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-3 px-4 rounded-xl shadow-md flex items-center justify-center gap-2 transition duration-200">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span class="text-xs uppercase tracking-wider">Enviar Pedido a WhatsApp</span>
+            </button>
+            <p class="text-[10px] text-center text-slate-400 mt-1.5 font-medium">Llegará directamente al número oficial 315 1072639</p>
+
+          </div>
+
+        </div>
+      </aside>
+
     </div>
-  </section>
 
-  <main class="max-w-5xl mx-auto px-4 py-6">
-    <section class="mb-6 space-y-3">
-      <!-- Search Input -->
-      <div class="relative">
-        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-stone-400">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </span>
-        <input 
-          type="search" 
-          id="searchInput" 
-          placeholder="Buscar limón, papa, cebolla, fresas, etc..." 
-          class="w-full pl-10 pr-10 py-3 bg-white border border-stone-300 rounded-xl shadow-sm text-stone-800 placeholder-stone-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-brand-500 transition-all text-sm sm:text-base"
-          oninput="handleSearch(this.value)"
-        />
-        <button 
-          id="clearSearchBtn" 
-          onclick="clearSearch()" 
-          class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-stone-400 hover:text-stone-600">
-          <i class="fa-solid fa-circle-xmark"></i>
-        </button>
-      </div>
-
-      <!-- Category Filter Chips -->
-      <div class="flex items-center gap-2 overflow-x-auto pb-1.5 custom-scroll select-none">
-        <button 
-          onclick="filterCategory('todos')" 
-          data-category="todos"
-          class="category-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-brand-600 text-white shadow-sm shadow-brand-500/30">
-          <i class="fa-solid fa-border-all mr-1.5"></i> Todos los productos
-        </button>
-        <button 
-          onclick="filterCategory('frutas')" 
-          data-category="frutas"
-          class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">
-          <i class="fa-solid fa-apple-whole text-red-500 mr-1.5"></i> Frutas
-        </button>
-        <button 
-          onclick="filterCategory('verduras')" 
-          data-category="verduras"
-          class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">
-          <i class="fa-solid fa-carrot text-orange-500 mr-1.5"></i> Verduras & Hortalizas
-        </button>
-        <button 
-          onclick="filterCategory('tuberculos')" 
-          data-category="tuberculos"
-          class="category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50">
-          <i class="fa-solid fa-cubes-stacked text-amber-700 mr-1.5"></i> Tubérculos
-        </button>
-      </div>
-    </section>
-
-    <div class="flex items-center justify-between mb-3 px-1">
-      <h3 class="text-sm font-bold text-stone-600 uppercase tracking-wider flex items-center gap-2">
-        <i class="fa-solid fa-boxes-stacked text-brand-600"></i> Catálogo Disponible (<span id="visibleCount">0</span>)
-      </h3>
-      <span class="text-xs text-stone-500">Valores en Pesos Colombianos (COP)</span>
-    </div>
-
-    <!-- Product Grid -->
-    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-5">
-      <!-- Injected via JavaScript -->
-    </div>
-
-    <!-- Empty Results Placeholder -->
-    <div id="noResultsState" class="hidden text-center py-16 px-4 bg-white rounded-2xl border border-stone-200 mt-4">
-      <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto text-stone-400 text-2xl mb-3">
-        <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
-      </div>
-      <h4 class="text-base font-bold text-stone-700">No encontramos productos coincidentes</h4>
-      <p class="text-xs text-stone-500 mt-1 max-w-sm mx-auto">Verifica tu búsqueda o vuelve a seleccionar una categoría para ver el catálogo completo.</p>
-      <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-brand-600 text-white text-xs font-semibold rounded-xl shadow hover:bg-brand-700">
-        Restablecer filtros
-      </button>
-    </div>
   </main>
 
-  <footer class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-stone-200 shadow-2xl p-3 z-40">
-    <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
-      <div class="flex items-center space-x-3">
-        <div class="w-11 h-11 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center text-lg font-bold">
-          <i class="fa-solid fa-cart-shopping"></i>
+  <!-- MOBILE BOTTOM FLOATING BAR (Visible only on mobile when items are added) -->
+  <div id="mobileFloatingBar" class="lg:hidden fixed bottom-3 left-3 right-3 z-40 transform transition-all duration-300 translate-y-36 opacity-0 pointer-events-none">
+    <div class="bg-gradient-to-r from-field-900 via-field-800 to-field-700 rounded-2xl p-2.5 shadow-2xl border-2 border-harvest-gold text-white flex items-center justify-between backdrop-blur-lg">
+      <div class="flex items-center gap-3 pl-1.5">
+        <div class="relative">
+          <div class="w-10 h-10 rounded-xl bg-harvest-gold text-field-900 font-black text-base flex items-center justify-center shadow">
+            <i class="fa-solid fa-basket-shopping"></i>
+          </div>
+          <span id="mobileFloatingBadge" class="absolute -top-1.5 -right-1.5 bg-ribbon-700 text-white text-[10px] font-extrabold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow">
+            0
+          </span>
         </div>
         <div>
-          <div class="text-xs text-stone-500 font-medium">
-            <span id="footerItemCount" class="font-bold text-stone-800">0</span> seleccionados
-          </div>
-          <div class="text-base sm:text-lg font-black text-brand-700 leading-none" id="footerTotalDisplay">
-            $0 COP
-          </div>
+          <span class="text-[10px] text-amber-200 font-bold uppercase tracking-wider block leading-none mb-0.5">Tu Canasta</span>
+          <span id="mobileFloatingTotal" class="text-base font-black text-white leading-none">COP$ 0</span>
         </div>
       </div>
 
-      <button 
-        id="btnViewOrder" 
-        onclick="openCartModal()" 
-        class="bg-brand-600 hover:bg-brand-700 active:scale-95 text-white font-bold py-3 px-5 sm:px-8 rounded-xl shadow-lg shadow-brand-600/30 flex items-center gap-2 text-sm sm:text-base transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed">
-        <span>Ver Carrito y Pagar</span>
-        <i class="fa-solid fa-arrow-right text-xs"></i>
+      <button onclick="openMobileCart()" class="bg-harvest-gold hover:bg-amber-400 text-field-950 font-black text-xs px-4 py-2.5 rounded-xl shadow flex items-center gap-1.5 active:scale-95 transition">
+        <span>Ver Pedido</span>
+        <i class="fa-solid fa-chevron-right text-[10px]"></i>
       </button>
-    </div>
-  </footer>
-
-  <div id="cartModal" class="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex justify-end transition-opacity duration-300 opacity-0 pointer-events-none">
-    <div 
-      id="cartPanel" 
-      class="bg-white w-full max-w-lg h-full shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-out">
-      
-      <!-- Modal Header -->
-      <div class="p-4 border-b border-stone-200 flex items-center justify-between bg-stone-50">
-        <div class="flex items-center gap-2.5">
-          <div class="w-8 h-8 rounded-lg bg-brand-500 text-white flex items-center justify-center text-sm">
-            <i class="fa-solid fa-bag-shopping"></i>
-          </div>
-          <div>
-            <h3 class="font-bold text-stone-800 leading-tight">Tu Canasta de Compra</h3>
-            <p class="text-xs text-stone-500">San Isidro · Venta directa del campo</p>
-          </div>
-        </div>
-        <button 
-          onclick="closeCartModal()" 
-          class="w-8 h-8 rounded-lg hover:bg-stone-200 flex items-center justify-center text-stone-500 hover:text-stone-800 transition-colors">
-          <i class="fa-solid fa-xmark text-lg"></i>
-        </button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="flex-1 overflow-y-auto p-4 custom-scroll space-y-6">
-        
-        <section>
-          <div class="flex items-center justify-between mb-2">
-            <h4 class="text-xs font-bold text-stone-500 uppercase tracking-wider">Productos Seleccionados</h4>
-            <button onclick="clearEntireCart()" class="text-xs text-red-500 hover:underline font-semibold" id="clearCartBtn">
-              Vaciar carrito
-            </button>
-          </div>
-
-          <div id="cartItemsList" class="space-y-2.5"></div>
-
-          <div id="cartEmptyState" class="py-10 text-center text-stone-400 space-y-2">
-            <i class="fa-solid fa-basket-shopping text-4xl text-stone-300"></i>
-            <p class="text-sm font-medium">Tu canasta está vacía todavía.</p>
-            <p class="text-xs text-stone-400">Agrega aguacates, frutas o verduras para comenzar tu pedido.</p>
-          </div>
-        </section>
-
-        <!-- Pricing Summary Box -->
-        <section id="orderCostBox" class="hidden bg-stone-50 p-4 rounded-xl border border-stone-200 space-y-2">
-          <div class="flex justify-between text-xs text-stone-600">
-            <span>Subtotal de productos</span>
-            <span id="summarySubtotal">$0 COP</span>
-          </div>
-          <div class="flex justify-between text-xs text-stone-600">
-            <span class="flex items-center gap-1">
-              <span>Costo de Domicilio</span>
-              <i class="fa-solid fa-circle-info text-stone-400 text-[10px]" title="Se coordina según tu sector"></i>
-            </span>
-            <span class="text-emerald-700 font-medium">A convenir / Contraentrega</span>
-          </div>
-          <div class="border-t border-stone-200 pt-2 flex justify-between items-baseline font-bold text-stone-900">
-            <span class="text-sm">Total Estimado</span>
-            <span class="text-xl text-brand-700 font-extrabold" id="summaryTotal">$0 COP</span>
-          </div>
-        </section>
-
-        <!-- Checkout Information Form -->
-        <form id="orderForm" onsubmit="submitOrderToWhatsApp(event)" class="space-y-4">
-          <h4 class="text-xs font-bold text-stone-500 uppercase tracking-wider flex items-center gap-1.5">
-            <i class="fa-solid fa-truck-ramp-box text-brand-600"></i> Datos de Entrega y Pago
-          </h4>
-
-          <div>
-            <label for="custName" class="block text-xs font-semibold text-stone-700 mb-1">Nombre y Apellido *</label>
-            <input 
-              type="text" 
-              id="custName" 
-              required 
-              placeholder="Ej: Pedro Gómez" 
-              class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-            />
-          </div>
-
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <div>
-              <label for="custPhone" class="block text-xs font-semibold text-stone-700 mb-1">Teléfono de contacto *</label>
-              <input 
-                type="tel" 
-                id="custPhone" 
-                required 
-                placeholder="Ej: 312 000 0000" 
-                class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-              />
-            </div>
-            <div>
-              <label for="custCity" class="block text-xs font-semibold text-stone-700 mb-1">Municipio / Ciudad *</label>
-              <input 
-                type="text" 
-                id="custCity" 
-                required 
-                placeholder="Ej: Bogotá" 
-                value="Bogotá"
-                class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label for="custAddress" class="block text-xs font-semibold text-stone-700 mb-1">Dirección y Barrio *</label>
-            <input 
-              type="text" 
-              id="custAddress" 
-              required 
-              placeholder="Ej: Carrera 10 # 20-30, Barrio María Cano" 
-              class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none"
-            />
-          </div>
-
-          <!-- Payment Method Radios -->
-          <div>
-            <label class="block text-xs font-semibold text-stone-700 mb-1.5">Escoge tu Medio de Pago *</label>
-            <div class="grid grid-cols-2 gap-2 text-xs">
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Nequi" checked class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-purple-700 inline-block"></span> Nequi
-                </span>
-              </label>
-
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Daviplata" class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-red-600 inline-block"></span> Daviplata
-                </span>
-              </label>
-
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Transferencia Bancolombia" class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> Bancolombia
-                </span>
-              </label>
-
-              <label class="payment-card flex items-center gap-2 p-2.5 rounded-xl border border-stone-200 cursor-pointer hover:bg-stone-50 transition-colors">
-                <input type="radio" name="paymentMethod" value="Efectivo Contraentrega" class="accent-brand-600">
-                <span class="font-medium text-stone-800 flex items-center gap-1.5">
-                  <span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span> Efectivo
-                </span>
-              </label>
-            </div>
-          </div>
-
-          <!-- Notes -->
-          <div>
-            <label for="custNotes" class="block text-xs font-semibold text-stone-700 mb-1">Instrucciones o maduración preferida (Opcional)</label>
-            <textarea 
-              id="custNotes" 
-              rows="2" 
-              placeholder="Ej: Aguacates maduros para hoy, cambio de billete de $50.000." 
-              class="w-full text-sm px-3.5 py-2.5 rounded-xl border border-stone-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none resize-none"></textarea>
-          </div>
-
-          <!-- Action Button inside modal -->
-          <div class="pt-2">
-            <button 
-              type="submit" 
-              id="btnConfirmOrder" 
-              class="w-full bg-[#25D366] hover:bg-[#20ba59] active:scale-[0.98] text-white font-bold py-3.5 px-4 rounded-xl shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2 text-base transition-all duration-150">
-              <i class="fa-brands fa-whatsapp text-2xl"></i>
-              <span>Confirmar Pedido a WhatsApp</span>
-            </button>
-            <p class="text-[11px] text-stone-500 text-center mt-2">
-              Se abrirá tu WhatsApp con el mensaje estructurado listo para enviar al <strong>315 107 2639</strong>.
-            </p>
-          </div>
-        </form>
-
-      </div>
     </div>
   </div>
 
-  <div 
-    id="toastNotification" 
-    class="fixed top-5 right-5 z-50 bg-stone-900 text-white text-xs sm:text-sm font-semibold px-4 py-3 rounded-xl shadow-2xl flex items-center gap-2 transform transition-all duration-300 translate-y-[-100px] opacity-0 pointer-events-none">
-    <i class="fa-solid fa-circle-check text-emerald-400 text-base"></i>
-    <span id="toastMessage">Producto agregado al carrito</span>
+  <!-- MOBILE SLIDE-OVER DRAWER (FULL HEIGHT EASY TOUCH) -->
+  <div id="mobileCartBackdrop" onclick="closeMobileCart()" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 transition-opacity duration-300 opacity-0 pointer-events-none lg:hidden"></div>
+
+  <div id="mobileCartDrawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl flex flex-col transform transition-transform duration-300 translate-x-full lg:hidden">
+    
+    <!-- Drawer Header -->
+    <div class="bg-field-800 text-white p-3.5 flex items-center justify-between border-b-2 border-amber-400">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-harvest-gold text-field-900 flex items-center justify-center font-black shadow">
+          <i class="fa-solid fa-basket-shopping text-sm"></i>
+        </div>
+        <div>
+          <h3 class="font-extrabold text-sm">Canasta Mayorista San Isidro</h3>
+          <p class="text-[11px] text-emerald-100">Venta directa del campo al mercado</p>
+        </div>
+      </div>
+      <button onclick="closeMobileCart()" class="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-base"></i>
+      </button>
+    </div>
+
+    <!-- Items List Scroll Area -->
+    <div id="mobileCartItems" class="flex-1 overflow-y-auto p-3.5 space-y-2.5 bg-slate-50">
+      <!-- Populated by JS -->
+    </div>
+
+    <!-- Mobile Drawer Form & Final WhatsApp Action -->
+    <div class="bg-white border-t border-slate-200 p-3.5 shadow-2xl">
+      <!-- Total breakdown -->
+      <div class="bg-amber-50 rounded-xl p-2.5 border border-amber-200 mb-3">
+        <div class="flex justify-between text-xs text-slate-600 mb-1">
+          <span>Subtotal estimado:</span>
+          <span id="mobileSubtotalText" class="font-bold text-slate-800">COP$ 0</span>
+        </div>
+        <div class="flex justify-between items-baseline border-t border-amber-200 pt-1.5">
+          <span class="text-xs font-black uppercase text-slate-800">Total Productos:</span>
+          <span id="mobileTotalText" class="text-base font-black text-field-700">COP$ 0</span>
+        </div>
+      </div>
+
+      <!-- Quick Compact Form for Phone -->
+      <div class="space-y-2 mb-3 max-h-48 overflow-y-auto pr-1 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 text-[11px] mb-0.5">Nombre o Negocio *</label>
+          <input type="text" id="mobName" placeholder="Nombre completo" class="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 text-[11px] mb-0.5">Dirección de Entrega *</label>
+            <input type="text" id="mobAddress" placeholder="Dirección completa" class="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 text-[11px] mb-0.5">Barrio / Municipio *</label>
+            <input type="text" id="mobCity" placeholder="Barrio o sector" class="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 text-[11px] mb-0.5">Teléfono Celular</label>
+            <input type="tel" id="mobPhone" placeholder="Celular" class="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 text-[11px] mb-0.5">Medio de Pago</label>
+            <select id="mobPayment" class="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none bg-white">
+              <option value="Efectivo Contraentrega">Contraentrega (Efectivo)</option>
+              <option value="Nequi">Nequi</option>
+              <option value="Daviplata">Daviplata</option>
+              <option value="Bancolombia">Bancolombia</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 text-[11px] mb-0.5">Notas adicionales</label>
+          <input type="text" id="mobNotes" placeholder="Grado de maduración, horarios de entrega..." class="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-field-600 focus:outline-none">
+        </div>
+      </div>
+
+      <!-- Submit Order Button -->
+      <button 
+        onclick="dispatchWhatsAppOrder('mobile')" 
+        class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-95 text-white font-black py-3 rounded-xl shadow-lg flex items-center justify-center gap-2 text-xs uppercase tracking-wider transition">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        <span>Enviar Pedido a WhatsApp (315 1072639)</span>
+      </button>
+      <p class="text-[10px] text-center text-slate-400 mt-1 font-medium">Coordinaremos el despacho de inmediato.</p>
+    </div>
+
+  </div>
+
+  <!-- DAILY UPDATE MODAL: EDIT PRICES DIRECTLY FROM ANY PHONE/PC -->
+  <div id="dailyManagerModal" class="fixed inset-0 bg-slate-900/75 backdrop-blur-sm z-50 flex items-center justify-center p-3 hidden">
+    <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] flex flex-col animate-pop">
+      
+      <div class="bg-field-800 text-white p-4 flex items-center justify-between border-b-2 border-amber-400">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-calendar-check text-amber-300 text-lg"></i>
+          <div>
+            <h3 class="font-extrabold text-sm sm:text-base">Editar Precios y Existencias del Día</h3>
+            <p class="text-[11px] text-emerald-100">Actualiza al instante desde el celular sin programar</p>
+          </div>
+        </div>
+        <button onclick="closeDailyManagerModal()" class="text-white hover:text-amber-300 text-lg p-1">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="p-4 overflow-y-auto flex-1 space-y-4">
+        
+        <!-- Google Sheets sync option -->
+        <div class="bg-field-50 border border-field-200 rounded-xl p-3 text-xs">
+          <div class="flex items-center justify-between mb-1">
+            <span class="font-bold text-field-900 flex items-center gap-1.5">
+              <i class="fa-solid fa-cloud-arrow-down text-emerald-600"></i> Conectar con Google Sheets (Opcional)
+            </span>
+            <span class="text-[10px] text-slate-400">Formato CSV</span>
+          </div>
+          <p class="text-slate-600 text-[11px] mb-2">
+            Pega el enlace publicado en la web de tu hoja de cálculo para cargar tus precios automáticamente:
+          </p>
+          <div class="flex gap-2">
+            <input type="url" id="sheetUrlInput" placeholder="https://docs.google.com/.../pub?output=csv" class="flex-1 p-2 border border-slate-300 rounded-lg text-xs">
+            <button onclick="syncGoogleSheetsCSV()" class="bg-field-700 hover:bg-field-800 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition">
+              Sincronizar
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Item by Item Table -->
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <h4 class="text-xs font-bold text-slate-700 uppercase tracking-wider">Productos Activos en Catálogo</h4>
+            <span class="text-[11px] text-slate-400">Cambia el precio o desmarca si se agotó</span>
+          </div>
+
+          <div class="border border-slate-200 rounded-xl divide-y divide-slate-100 max-h-72 overflow-y-auto" id="adminEditableList">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bg-slate-50 p-3.5 border-t border-slate-200 flex items-center justify-between">
+        <button onclick="restoreInitialDefaults()" class="text-xs text-rose-600 hover:text-rose-800 font-semibold underline">
+          Restablecer original
+        </button>
+
+        <div class="flex items-center gap-2">
+          <button onclick="closeDailyManagerModal()" class="text-xs px-3 py-2 text-slate-600 hover:bg-slate-200 rounded-lg font-semibold">
+            Cancelar
+          </button>
+          <button onclick="saveDailyManagerChanges()" class="text-xs bg-field-700 hover:bg-field-800 text-white font-extrabold px-4 py-2 rounded-xl shadow transition">
+            Guardar y Publicar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Overlay -->
+  <div id="toastNotification" class="fixed bottom-20 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
+    <div class="bg-slate-900/95 text-white px-4 py-2.5 rounded-full shadow-2xl flex items-center gap-2 text-xs font-semibold backdrop-blur-sm border border-amber-400/40 animate-pop">
+      <i class="fa-solid fa-circle-check text-emerald-400"></i>
+      <span id="toastMessage">Producto añadido a tu canasta</span>
+    </div>
   </div>
 
   <script>
-    const BUSINESS_WHATSAPP = "573151072639";
-    const BUSINESS_NAME = "San Isidro - Venta directa del campo al mercado";
+    // Business Information & Configuration
+    const STORE_CONFIG = {
+      phone: "573151072639", // Target WhatsApp number
+      name: "Mayorista San Isidro",
+      storageKey: "san_isidro_products_store_v2"
+    };
 
-    // Catálogo con tus 32 productos y precios solicitados
-    const CATALOG = [
+    // Categories
+    const CATEGORIES = [
+      { id: 'todos', label: 'Todos los Productos', icon: 'fa-cubes' },
+      { id: 'aguacates', label: 'Aguacates Seleccionados', icon: 'fa-certificate' },
+      { id: 'frutas', label: 'Frutas Frescas', icon: 'fa-apple-whole' },
+      { id: 'verduras', label: 'Verduras & Hortalizas', icon: 'fa-carrot' },
+      { id: 'tuberculos', label: 'Tubérculos & Plátanos', icon: 'fa-layer-group' },
+      { id: 'mayorista', label: 'Bultos & Mayoristas', icon: 'fa-truck-ramp-box' }
+    ];
+
+    // Default High Quality Produce Seed Data (Wholesale & Retail Colombian Market)
+    const SEED_PRODUCTS = [
       {
         id: 1,
-        name: "Limón",
-        category: "frutas",
+        name: "Aguacate Hass Extra (Calidad Exportación)",
+        category: "aguacates",
+        price: 7500,
         unit: "Kilo",
-        price: 5000,
-        badge: "Cítrico",
-        img: "https://images.unsplash.com/photo-1590502593747-42a996133562?auto=format&fit=crop&w=600&q=80",
-        description: "Limón fresco y jugoso seleccionado de cosecha."
+        presentation: "Kilo (3 a 4 unidades maduración controlada)",
+        image: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80",
+        desc: "Pulpa mantecosa, nuez suave, sin fibras. Excelente rendimiento.",
+        tag: "⭐ Especial San Isidro",
+        available: true
       },
       {
         id: 2,
-        name: "Piña",
-        category: "frutas",
-        unit: "Kilo",
-        price: 4800,
-        badge: "Dulce",
-        img: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=600&q=80",
-        description: "Piña aromática de excelente maduración natural."
+        name: "Aguacate Hass - Canastilla Mayorista",
+        category: "mayorista",
+        price: 68000,
+        unit: "Canastilla 10 Kg",
+        presentation: "Canastilla x 10 Kilos seleccionados",
+        image: "https://images.unsplash.com/photo-1601039641847-7857b994d704?auto=format&fit=crop&w=600&q=80",
+        desc: "Precio especial mayorista para fruver, restaurantes y distribuidores.",
+        tag: "Al por Mayor",
+        available: true
       },
       {
         id: 3,
-        name: "Yuca",
-        category: "tuberculos",
+        name: "Aguacate Papelillo / Lorena Gigante",
+        category: "aguacates",
+        price: 6500,
         unit: "Kilo",
-        price: 3000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1596097635121-14b63b7a0c19?auto=format&fit=crop&w=600&q=80",
-        description: "Yuca harinosa, fresca y de fácil cocción."
+        presentation: "Kilo (Unidades grandes y jugosas)",
+        image: "https://images.unsplash.com/photo-1590005354167-6da97870c757?auto=format&fit=crop&w=600&q=80",
+        desc: "Cáscara fina y brillante, textura suave tradicional colombiana.",
+        tag: "Gran Calibre",
+        available: true
       },
       {
         id: 4,
-        name: "Papa Pastusa (@)",
-        category: "tuberculos",
-        unit: "Arroba (@)",
-        price: 39000,
-        badge: "Oferta",
-        img: "https://images.unsplash.com/photo-1590165482129-1b8b27698780?auto=format&fit=crop&w=600&q=80",
-        description: "Arroba de papa pastusa tradicional (12.5 kg)."
+        name: "Tomate Chonto de Guiso Seleccionado",
+        category: "verduras",
+        price: 3600,
+        unit: "Kilo",
+        presentation: "Kilo (Pintón / Maduro firme)",
+        image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
+        desc: "Carnoso, con buen color y aroma. Rendidor para salsas y guisos.",
+        tag: "Cosecha Hoy",
+        available: true
       },
       {
         id: 5,
-        name: "Papa Pastusa (Bulto)",
-        category: "tuberculos",
-        unit: "Bulto",
-        price: 130000,
-        badge: "Mayorista",
-        img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
-        description: "Bulto completo de papa pastusa seleccionada."
+        name: "Tomate Chonto - Canastilla Comercial",
+        category: "mayorista",
+        price: 55000,
+        unit: "Canastilla 22 Kg",
+        presentation: "Canastilla plástica x 22 Kilos",
+        image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=600&q=80",
+        desc: "Tomate parejo seleccionado en origen.",
+        tag: "Mayorista",
+        available: true
       },
       {
         id: 6,
-        name: "Papa Criolla",
+        name: "Papa Pastusa Limpia de Primera",
         category: "tuberculos",
+        price: 3200,
         unit: "Kilo",
-        price: 8000,
-        badge: "Fresco",
-        img: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
-        description: "Papa criolla dorada suave y arenosa para ajiaco o freír."
+        presentation: "Kilo (Lavada, tamaño parejo)",
+        image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=600&q=80",
+        desc: "Especial para ajiacos, sopas y puré consistente.",
+        tag: null,
+        available: true
       },
       {
         id: 7,
-        name: "Aguacate Hass Maduro",
-        category: "frutas",
-        unit: "Kilo",
-        price: 10000,
-        badge: "Especialidad",
-        img: "https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=600&q=80",
-        description: "Aguacate cremoso San Isidro en su punto óptimo de consumo."
+        name: "Papa Pastusa - Bulto Cerrado",
+        category: "mayorista",
+        price: 125000,
+        unit: "Bulto 50 Kg",
+        presentation: "Bulto x 50 Kilos directamente de finca",
+        image: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=600&q=80",
+        desc: "Bulto seleccionado de primera sin tierra excesiva.",
+        tag: "Bulto Mayorista",
+        available: true
       },
       {
         id: 8,
-        name: "Manzana Unidad L",
-        category: "frutas",
-        unit: "Unidad Grande",
-        price: 2000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=600&q=80",
-        description: "Manzana grande fresca y crujiente de alta calidad."
+        name: "Papa Criolla Lavada (Amarilla)",
+        category: "tuberculos",
+        price: 4800,
+        unit: "Kilo",
+        presentation: "Kilo (Dorada y redondita)",
+        image: "https://images.unsplash.com/photo-1590165482129-1b8b27698780?auto=format&fit=crop&w=600&q=80",
+        desc: "Fritura crocante por fuera y pura mantequilla por dentro.",
+        tag: "Tradicional",
+        available: true
       },
       {
         id: 9,
-        name: "Manzana Unidad M",
-        category: "frutas",
-        unit: "Unidad Mediana",
-        price: 1500,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?auto=format&fit=crop&w=600&q=80",
-        description: "Manzana mediana ideal para loncheras y meriendas."
+        name: "Cebolla Cabezona Roja / Morada",
+        category: "verduras",
+        price: 3400,
+        unit: "Kilo",
+        presentation: "Kilo (Bulbos firmes y secos)",
+        image: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=600&q=80",
+        desc: "Color vibrante, aroma intenso para encurtidos y ensaladas.",
+        tag: null,
+        available: true
       },
       {
         id: 10,
-        name: "Tomate de Guiso (Extra)",
+        name: "Cebolla Cabezona Blanca Limpia",
         category: "verduras",
+        price: 2900,
         unit: "Kilo",
-        price: 6000,
-        badge: "Extra",
-        img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=600&q=80",
-        description: "Tomate carnoso y maduro de máxima calidad y tamaño."
+        presentation: "Kilo",
+        image: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80",
+        desc: "Cebolla de primera calidad, seca y sin brotes.",
+        tag: null,
+        available: true
       },
       {
         id: 11,
-        name: "Tomate de Guiso (Primera)",
-        category: "verduras",
+        name: "Plátano Hartón Verde Campesino",
+        category: "tuberculos",
+        price: 3400,
         unit: "Kilo",
-        price: 5200,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1546470427-227c7369a9b7?auto=format&fit=crop&w=600&q=80",
-        description: "Tomate fresco ideal para guisos tradicionales diarios."
+        presentation: "Kilo (2 a 3 unidades gruesas)",
+        image: "https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=600&q=80",
+        desc: "Plátano grueso ideal para patacones crocantes y sancochos.",
+        tag: "Grueso",
+        available: true
       },
       {
         id: 12,
-        name: "Cebolla Cabezona Gruesa",
-        category: "verduras",
+        name: "Plátano Maduro Colicero / Hartón",
+        category: "tuberculos",
+        price: 3500,
         unit: "Kilo",
-        price: 4000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?auto=format&fit=crop&w=600&q=80",
-        description: "Cebolla cabezona blanca de gran calibre y firmeza."
+        presentation: "Kilo (En punto dulce)",
+        image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
+        desc: "Punto caramelo listo para asar, rellenar o tajadas doradas.",
+        tag: "Dulce",
+        available: true
       },
       {
         id: 13,
-        name: "Cebolla Cabezona Pareja",
-        category: "verduras",
+        name: "Limón Tahití Extra Jugoso",
+        category: "frutas",
+        price: 3900,
         unit: "Kilo",
-        price: 3200,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1508747703725-719777637510?auto=format&fit=crop&w=600&q=80",
-        description: "Cebolla cabezona tamaño estándar para la cocina cotidiana."
+        presentation: "Kilo (Cáscara delgada, sin semilla)",
+        image: "https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=600&q=80",
+        desc: "Verde parejo con más del 45% de extracción en jugo.",
+        tag: "Puro Jugo",
+        available: true
       },
       {
         id: 14,
-        name: "Cebolla Larga Fina",
-        category: "verduras",
-        unit: "Kilo",
-        price: 3800,
-        badge: "Fina",
-        img: "https://images.unsplash.com/photo-1518977822534-7049a61ee0c2?auto=format&fit=crop&w=600&q=80",
-        description: "Cebolla junca fresca de tallo verde fino y excelente aroma."
+        name: "Limón Tahití - Bulto Mayorista",
+        category: "mayorista",
+        price: 110000,
+        unit: "Bulto 45 Kg",
+        presentation: "Bulto x 45 Kilos",
+        image: "https://images.unsplash.com/photo-1590502593747-42a996133562?auto=format&fit=crop&w=600&q=80",
+        desc: "Para bares, restaurantes y distribuidores de jugos.",
+        tag: "Precio Bulto",
+        available: true
       },
       {
         id: 15,
-        name: "Cebolla Larga de 3 Días",
-        category: "verduras",
-        unit: "Kilo",
-        price: 2000,
-        badge: "Económica",
-        img: "https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=600&q=80",
-        description: "Cebolla en rama sazonada para consumo inmediato."
+        name: "Piña Gold Miel Seleccionada",
+        category: "frutas",
+        price: 5200,
+        unit: "Unidad",
+        presentation: "Unidad Grande (~2.2 kg)",
+        image: "https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=600&q=80",
+        desc: "Dulce, aromática y jugosa. Cosecha del Valle del Cauca y Santander.",
+        tag: "Extra Dulce",
+        available: true
       },
       {
         id: 16,
-        name: "Zanahoria",
-        category: "verduras",
+        name: "Yuca Campesina Harinosa",
+        category: "tuberculos",
+        price: 3900,
         unit: "Kilo",
-        price: 2000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=600&q=80",
-        description: "Zanahoria fresca lavada, crujiente y rica en nutrientes."
+        presentation: "Kilo (Blandita y blanca garantizada)",
+        image: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=600&q=80",
+        desc: "Abre esponjosa al hervir, libre de hebras duras.",
+        tag: "Recomendada",
+        available: true
       },
       {
         id: 17,
-        name: "Habichuela",
+        name: "Zanahoria Lavada Gruesa",
         category: "verduras",
-        unit: "Kilo",
-        price: 11000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?auto=format&fit=crop&w=600&q=80",
-        description: "Habichuela verde tierna, fresca y sin hebra."
-      },
-      {
-        id: 18,
-        name: "Arveja en Cáscara",
-        category: "verduras",
-        unit: "Kilo",
-        price: 9000,
-        badge: "Cosecha",
-        img: "https://images.unsplash.com/photo-1587735243615-c03f25aaff15?auto=format&fit=crop&w=600&q=80",
-        description: "Vaina verde fresca seleccionada para desgranar en casa."
-      },
-      {
-        id: 19,
-        name: "Arveja Desgranada",
-        category: "verduras",
-        unit: "Kilo",
-        price: 18000,
-        badge: "Lista para Cocinar",
-        img: "https://images.unsplash.com/photo-1592394533824-9440e5d68530?auto=format&fit=crop&w=600&q=80",
-        description: "Grano verde limpio y fresco, listo para la olla."
-      },
-      {
-        id: 20,
-        name: "Ahuyama",
-        category: "verduras",
-        unit: "Kilo",
-        price: 2800,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=600&q=80",
-        description: "Ahuyama cremosa de pulpa naranja ideal para sopas y purés."
-      },
-      {
-        id: 21,
-        name: "Maracuyá",
-        category: "frutas",
-        unit: "Kilo",
-        price: 7400,
-        badge: "Pulpas",
-        img: "https://images.unsplash.com/photo-1576181256399-834e3b3a49bf?auto=format&fit=crop&w=600&q=80",
-        description: "Maracuyá pesado y cargado de pulpa ácida y aromática."
-      },
-      {
-        id: 22,
-        name: "Banano Criollo",
-        category: "frutas",
-        unit: "Kilo",
-        price: 2600,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?auto=format&fit=crop&w=600&q=80",
-        description: "Banano criollo dulce, textura suave y maduración uniforme."
-      },
-      {
-        id: 23,
-        name: "Pimentones",
-        category: "verduras",
-        unit: "Kilo",
-        price: 7000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=600&q=80",
-        description: "Pimentón grueso, carnoso y brillante para tus comidas."
-      },
-      {
-        id: 24,
-        name: "Guayaba Fina",
-        category: "frutas",
-        unit: "Kilo",
-        price: 5400,
-        badge: "Mesa",
-        img: "https://images.unsplash.com/photo-1536511135898-752b184e6812?auto=format&fit=crop&w=600&q=80",
-        description: "Guayaba de mesa dulce, fragante y seleccionada."
-      },
-      {
-        id: 25,
-        name: "Guayaba para Pulpa",
-        category: "frutas",
-        unit: "Kilo",
-        price: 3500,
-        badge: "Jugo",
-        img: "https://images.unsplash.com/photo-1629831665249-165fbb77f108?auto=format&fit=crop&w=600&q=80",
-        description: "Especial para hervir, colar y preparar jugos o dulces caseros."
-      },
-      {
-        id: 26,
-        name: "Cilantro",
-        category: "verduras",
-        unit: "Porción",
-        price: 2000,
-        badge: "Fresco",
-        img: "https://images.unsplash.com/photo-1588879462618-971c6674f1b5?auto=format&fit=crop&w=600&q=80",
-        description: "Cilantro aromático recién cortado para darle sazón al caldo."
-      },
-      {
-        id: 27,
-        name: "Espinaca",
-        category: "verduras",
-        unit: "Atao",
-        price: 3000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=600&q=80",
-        description: "Hojas tiernas y limpias de espinaca por atado."
-      },
-      {
-        id: 28,
-        name: "Lechuga Crespa",
-        category: "verduras",
-        unit: "Atao",
         price: 2500,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=600&q=80",
-        description: "Hojas crujientes y frescas para ensaladas."
-      },
-      {
-        id: 29,
-        name: "Lechuga Batavia",
-        category: "verduras",
-        unit: "Unidad",
-        price: 3000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1556801712-76c8eb07bbc9?auto=format&fit=crop&w=600&q=80",
-        description: "Lechuga compacta y redonda por unidad."
-      },
-      {
-        id: 30,
-        name: "Fresa Extra",
-        category: "frutas",
-        unit: "Libra",
-        price: 6000,
-        badge: "Extra",
-        img: "https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=600&q=80",
-        description: "Fresa de gran tamaño, dulce y uniforme de primera selección."
-      },
-      {
-        id: 31,
-        name: "Fresa Primera",
-        category: "frutas",
-        unit: "Libra",
-        price: 5000,
-        badge: null,
-        img: "https://images.unsplash.com/photo-1543528176-61b239494933?auto=format&fit=crop&w=600&q=80",
-        description: "Fresa fresca de buen tamaño, perfecta para postres."
-      },
-      {
-        id: 32,
-        name: "Fresa de Jugo",
-        category: "frutas",
-        unit: "Libra",
-        price: 3000,
-        badge: "Pulpas",
-        img: "https://images.unsplash.com/photo-1587393855524-087f83d95bc9?auto=format&fit=crop&w=600&q=80",
-        description: "Fresa económica bien madura especial para licuados y batidos."
+        unit: "Kilo",
+        presentation: "Kilo",
+        image: "https://images.unsplash.com/photo-1447175008436-054170c2e979?auto=format&fit=crop&w=600&q=80",
+        desc: "Crocante, de color naranja vivo, lavada y lista para su consumo.",
+        tag: null,
+        available: true
       }
     ];
 
+    // State
+    let products = [];
+    let cart = []; // Array of { id, name, price, unit, presentation, image, qty }
     let currentCategory = 'todos';
-    let searchQuery = '';
-    let cart = {};
+    let currentSearch = '';
 
-    function formatCOP(number) {
-      return new Intl.NumberFormat('es-CO', {
-        style: 'currency',
-        currency: 'COP',
-        maximumFractionDigits: 0
-      }).format(number);
-    }
+    // Helpers
+    const formatCOP = (val) => {
+      return "COP$ " + new Intl.NumberFormat('es-CO', { maximumFractionDigits: 0 }).format(val || 0);
+    };
 
-    function renderCatalog() {
-      const grid = document.getElementById('productGrid');
-      const emptyState = document.getElementById('noResultsState');
-      
-      const filtered = CATALOG.filter(item => {
-        const matchesCategory = (currentCategory === 'todos') || (item.category === currentCategory);
-        const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                              item.unit.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesCategory && matchesSearch;
-      });
-
-      document.getElementById('visibleCount').textContent = filtered.length;
-
-      if (filtered.length === 0) {
-        grid.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        return;
+    function init() {
+      const savedProducts = localStorage.getItem(STORE_CONFIG.storageKey);
+      if (savedProducts) {
+        try {
+          products = JSON.parse(savedProducts);
+        } catch (e) {
+          products = [...SEED_PRODUCTS];
+        }
       } else {
-        emptyState.classList.add('hidden');
+        products = [...SEED_PRODUCTS];
       }
 
-      grid.innerHTML = filtered.map(item => {
-        const qtyInCart = cart[item.id] || 0;
-        return `
-          <div class="bg-white rounded-2xl border border-stone-200/90 shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden group">
-            <div class="relative w-full h-36 sm:h-44 bg-stone-100 overflow-hidden">
-              <img 
-                src="${item.img}" 
-                alt="${item.name}" 
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                onerror="this.onerror=null; this.src='https://placehold.co/400x300/2d6a4f/ffffff?text=${encodeURIComponent(item.name)}';"
-              />
-              ${item.badge ? `
-                <span class="absolute top-2 left-2 bg-brand-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow">
-                  ${item.badge}
-                </span>
-              ` : ''}
-              <span class="absolute bottom-2 right-2 bg-stone-900/75 backdrop-blur-sm text-white text-[11px] font-medium px-2 py-0.5 rounded-md">
-                ${item.unit}
-              </span>
-            </div>
-
-            <div class="p-3.5 flex-1 flex flex-col justify-between">
-              <div>
-                <h4 class="font-bold text-sm sm:text-base text-stone-900 leading-snug line-clamp-1 group-hover:text-brand-700 transition-colors">
-                  ${item.name}
-                </h4>
-                <p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">
-                  ${item.description}
-                </p>
-              </div>
-
-              <div class="mt-3 pt-2 border-t border-stone-100 flex items-center justify-between gap-2">
-                <div>
-                  <span class="text-[10px] uppercase font-bold text-stone-400 block leading-none">Precio</span>
-                  <span class="text-sm sm:text-base font-extrabold text-brand-700">
-                    ${formatCOP(item.price)}
-                  </span>
-                </div>
-
-                <div>
-                  ${qtyInCart > 0 ? `
-                    <div class="flex items-center bg-brand-50 border border-brand-300 rounded-xl p-0.5 shadow-sm">
-                      <button 
-                        onclick="updateCartItemQty(${item.id}, -1)" 
-                        class="w-7 h-7 rounded-lg bg-white text-brand-800 hover:bg-brand-600 hover:text-white font-bold text-sm flex items-center justify-center transition-colors">
-                        -
-                      </button>
-                      <span class="px-2 text-xs font-bold text-brand-800">${qtyInCart}</span>
-                      <button 
-                        onclick="updateCartItemQty(${item.id}, 1)" 
-                        class="w-7 h-7 rounded-lg bg-brand-600 text-white hover:bg-brand-700 font-bold text-sm flex items-center justify-center transition-colors">
-                        +
-                      </button>
-                    </div>
-                  ` : `
-                    <button 
-                      onclick="addToCart(${item.id})" 
-                      class="bg-brand-600 hover:bg-brand-700 active:scale-90 text-white text-xs font-bold px-3 py-2 rounded-xl flex items-center gap-1.5 shadow-sm shadow-brand-600/30 transition-all">
-                      <i class="fa-solid fa-cart-plus"></i>
-                      <span class="hidden xs:inline">Agregar</span>
-                    </button>
-                  `}
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function addToCart(productId) {
-      cart[productId] = (cart[productId] || 0) + 1;
-      const product = CATALOG.find(p => p.id === productId);
-      showToast(`+1 ${product.name} agregado`);
-      refreshUI();
-    }
-
-    function updateCartItemQty(productId, change) {
-      if (!cart[productId]) return;
-      cart[productId] += change;
-      if (cart[productId] <= 0) {
-        delete cart[productId];
-      }
-      refreshUI();
-    }
-
-    function clearEntireCart() {
-      if (Object.keys(cart).length === 0) return;
-      cart = {};
-      refreshUI();
-      showToast('Canasta vaciada');
-    }
-
-    function refreshUI() {
+      renderCategoryTabs();
       renderCatalog();
-      renderCartDrawer();
-      updateFooterBar();
+      updateAllCartViews();
     }
 
-    function calculateTotals() {
-      let count = 0;
-      let total = 0;
-      for (const id in cart) {
-        const qty = cart[id];
-        const item = CATALOG.find(p => p.id == id);
-        if (item) {
-          count += qty;
-          total += item.price * qty;
-        }
-      }
-      return { count, total };
-    }
-
-    function updateFooterBar() {
-      const { count, total } = calculateTotals();
-      const badge = document.getElementById('cartHeaderBadge');
-      const footerCount = document.getElementById('footerItemCount');
-      const footerTotal = document.getElementById('footerTotalDisplay');
-      const btnView = document.getElementById('btnViewOrder');
-
-      footerCount.textContent = count;
-      footerTotal.textContent = formatCOP(total);
-
-      if (count > 0) {
-        badge.textContent = count;
-        badge.classList.remove('hidden');
-        badge.classList.add('badge-pop');
-        btnView.disabled = false;
-      } else {
-        badge.classList.add('hidden');
-        btnView.disabled = true;
-      }
-    }
-
-    function renderCartDrawer() {
-      const container = document.getElementById('cartItemsList');
-      const emptyState = document.getElementById('cartEmptyState');
-      const costBox = document.getElementById('orderCostBox');
-      const clearBtn = document.getElementById('clearCartBtn');
-      const confirmBtn = document.getElementById('btnConfirmOrder');
-      
-      const { count, total } = calculateTotals();
-      const ids = Object.keys(cart);
-
-      if (ids.length === 0) {
-        container.innerHTML = '';
-        emptyState.classList.remove('hidden');
-        costBox.classList.add('hidden');
-        clearBtn.classList.add('hidden');
-        confirmBtn.disabled = true;
-        confirmBtn.classList.add('opacity-50', 'cursor-not-allowed');
-        return;
-      }
-
-      emptyState.classList.add('hidden');
-      costBox.classList.remove('hidden');
-      clearBtn.classList.remove('hidden');
-      confirmBtn.disabled = false;
-      confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-
-      container.innerHTML = ids.map(id => {
-        const item = CATALOG.find(p => p.id == id);
-        const qty = cart[id];
-        const lineTotal = item.price * qty;
+    // Category Tabs Rendering
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabs');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = cat.id === currentCategory;
+        const activeStyles = isActive 
+          ? 'bg-harvest-gold text-field-950 font-black shadow-md border-amber-300' 
+          : 'bg-white/10 hover:bg-white/20 text-white font-medium border-white/15';
 
         return `
-          <div class="flex items-center justify-between p-2.5 bg-stone-50 rounded-xl border border-stone-200/80 gap-3">
-            <img 
-              src="${item.img}" 
-              alt="${item.name}" 
-              class="w-12 h-12 rounded-lg object-cover bg-stone-200 flex-shrink-0"
-              onerror="this.src='https://placehold.co/100x100/2d6a4f/ffffff?text=Prod';"
-            />
-            <div class="flex-1 min-w-0">
-              <div class="font-bold text-xs sm:text-sm text-stone-800 truncate">${item.name}</div>
-              <div class="text-[11px] text-stone-500">${formatCOP(item.price)} × ${qty} ${item.unit}</div>
-              <div class="text-xs font-extrabold text-brand-700">${formatCOP(lineTotal)}</div>
-            </div>
-            <div class="flex items-center bg-white border border-stone-300 rounded-lg p-0.5">
-              <button 
-                type="button"
-                onclick="updateCartItemQty(${item.id}, -1)" 
-                class="w-6 h-6 rounded text-stone-600 hover:bg-stone-200 font-bold flex items-center justify-center text-xs">
-                -
-              </button>
-              <span class="px-2 text-xs font-bold text-stone-800">${qty}</span>
-              <button 
-                type="button"
-                onclick="updateCartItemQty(${item.id}, 1)" 
-                class="w-6 h-6 rounded bg-brand-600 text-white font-bold flex items-center justify-center text-xs">
-                +
-              </button>
-            </div>
-          </div>
+          <button 
+            onclick="selectCategory('${cat.id}')"
+            class="flex items-center gap-1.5 whitespace-nowrap text-xs px-3.5 py-1.5 rounded-full transition-all duration-150 border active:scale-95 ${activeStyles}">
+            <i class="fa-solid ${cat.icon} text-[11px]"></i>
+            <span>${cat.label}</span>
+          </button>
         `;
       }).join('');
-
-      document.getElementById('summarySubtotal').textContent = formatCOP(total);
-      document.getElementById('summaryTotal').textContent = formatCOP(total);
     }
 
-    function filterCategory(cat) {
-      currentCategory = cat;
-      document.querySelectorAll('.category-btn').forEach(btn => {
-        if (btn.getAttribute('data-category') === cat) {
-          btn.className = "category-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-brand-600 text-white shadow-sm shadow-brand-500/30";
-        } else {
-          btn.className = "category-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold tracking-wide whitespace-nowrap transition-all duration-200 bg-white text-stone-700 border border-stone-200 hover:bg-stone-50";
-        }
-      });
+    function selectCategory(catId) {
+      currentCategory = catId;
+      renderCategoryTabs();
       renderCatalog();
     }
 
     function handleSearch(val) {
-      searchQuery = val.trim();
+      currentSearch = val.trim().toLowerCase();
       const clearBtn = document.getElementById('clearSearchBtn');
-      if (searchQuery.length > 0) {
+      if (currentSearch.length > 0) {
         clearBtn.classList.remove('hidden');
       } else {
         clearBtn.classList.add('hidden');
@@ -1016,115 +937,487 @@
     }
 
     function clearSearch() {
-      const input = document.getElementById('searchInput');
-      input.value = '';
-      searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      currentSearch = '';
       document.getElementById('clearSearchBtn').classList.add('hidden');
       renderCatalog();
-      input.focus();
     }
 
     function resetFilters() {
+      currentCategory = 'todos';
       clearSearch();
-      filterCategory('todos');
+      renderCategoryTabs();
     }
 
-    function openCartModal() {
-      const modal = document.getElementById('cartModal');
-      const panel = document.getElementById('cartPanel');
-      modal.classList.remove('pointer-events-none', 'opacity-0');
-      modal.classList.add('opacity-100');
-      panel.classList.remove('translate-x-full');
-      document.body.classList.add('overflow-hidden');
-    }
+    function renderCatalog() {
+      const grid = document.getElementById('productsGrid');
+      const emptyBox = document.getElementById('noProductsFound');
+      const counter = document.getElementById('catalogResultsCount');
 
-    function closeCartModal() {
-      const modal = document.getElementById('cartModal');
-      const panel = document.getElementById('cartPanel');
-      panel.classList.add('translate-x-full');
-      modal.classList.add('opacity-0');
-      setTimeout(() => {
-        modal.classList.add('pointer-events-none');
-        document.body.classList.remove('overflow-hidden');
-      }, 300);
-    }
+      const filtered = products.filter(p => {
+        if (!p.available) return false;
+        const matchCategory = (currentCategory === 'todos') || (p.category === currentCategory);
+        const matchSearch = !currentSearch || 
+          p.name.toLowerCase().includes(currentSearch) ||
+          p.presentation.toLowerCase().includes(currentSearch) ||
+          p.desc.toLowerCase().includes(currentSearch);
+        return matchCategory && matchSearch;
+      });
 
-    document.getElementById('cartModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closeCartModal();
-      }
-    });
+      counter.innerHTML = `
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+        <span>Mostrando <strong>${filtered.length}</strong> producto${filtered.length === 1 ? '' : 's'}</span>
+      `;
 
-    let toastTimer = null;
-    function showToast(message) {
-      const toast = document.getElementById('toastNotification');
-      const msg = document.getElementById('toastMessage');
-      msg.textContent = message;
-      
-      clearTimeout(toastTimer);
-      toast.classList.remove('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
-      toast.classList.add('opacity-100', 'translate-y-0');
-
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('opacity-100', 'translate-y-0');
-        toast.classList.add('opacity-0', 'translate-y-[-100px]', 'pointer-events-none');
-      }, 2200);
-    }
-
-    function submitOrderToWhatsApp(event) {
-      event.preventDefault();
-      
-      const { count, total } = calculateTotals();
-      if (count === 0) {
-        showToast('Selecciona al menos un producto');
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyBox.classList.remove('hidden');
         return;
       }
 
-      const name = document.getElementById('custName').value.trim();
-      const phone = document.getElementById('custPhone').value.trim();
-      const city = document.getElementById('custCity').value.trim();
-      const address = document.getElementById('custAddress').value.trim();
-      const notes = document.getElementById('custNotes').value.trim();
-      
-      const paymentRadio = document.querySelector('input[name="paymentMethod"]:checked');
-      const paymentMethod = paymentRadio ? paymentRadio.value : 'A acordar';
+      emptyBox.classList.add('hidden');
 
-      let message = `🌾 *PEDIDO NUEVO - SAN ISIDRO*\n`;
-      message += `_Venta directa del campo al mercado_\n`;
-      message += `-------------------------------------------\n`;
-      message += `👤 *Cliente:* ${name}\n`;
-      message += `📱 *Teléfono:* ${phone}\n`;
-      message += `📍 *Ciudad/Municipio:* ${city}\n`;
-      message += `🏠 *Dirección:* ${address}\n`;
-      message += `💳 *Medio de Pago:* ${paymentMethod}\n`;
-      if (notes) {
-        message += `📝 *Observaciones:* ${notes}\n`;
-      }
-      message += `-------------------------------------------\n`;
-      message += `📦 *DETALLE DE LA COSECHA:*\n`;
+      grid.innerHTML = filtered.map(item => {
+        const inCart = cart.find(c => c.id === item.id);
+        const qty = inCart ? inCart.qty : 0;
 
-      for (const id in cart) {
-        const item = CATALOG.find(p => p.id == id);
-        const qty = cart[id];
-        const lineTotal = item.price * qty;
-        message += `• *${item.name}* (${item.unit})\n`;
-        message += `   ↳ Cantidad: ${qty} | Subtotal: ${formatCOP(lineTotal)}\n`;
-      }
+        return `
+          <div class="bg-white rounded-2xl overflow-hidden border border-slate-200/90 custom-shadow flex flex-col justify-between group hover:border-field-500 transition-all duration-200">
+            
+            <!-- Product Image with Badge and Unit -->
+            <div class="relative w-full h-32 sm:h-40 bg-slate-100 overflow-hidden">
+              <img 
+                src="${item.image}" 
+                alt="${item.name}" 
+                loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                onerror="this.src='https://placehold.co/400x300/1e6822/ffffff?text=San+Isidro'"
+              >
+              
+              <!-- Ribbon Badge -->
+              ${item.tag ? `
+                <span class="absolute top-2 left-2 badge-ribbon text-white font-extrabold text-[9px] uppercase px-2 py-0.5 rounded shadow-md border border-white/20">
+                  ${item.tag}
+                </span>
+              ` : ''}
 
-      message += `-------------------------------------------\n`;
-      message += `💰 *VALOR TOTAL PRODUCTOS:* *${formatCOP(total)}*\n`;
-      message += `🚚 *Domicilio:* A convenir con el cliente\n\n`;
-      message += `Hola, acabo de armar mi pedido en el catálogo virtual de San Isidro. ¿Me confirman disponibilidad para el despacho? ¡Muchas gracias!`;
+              <!-- Unit Pill -->
+              <span class="absolute bottom-2 right-2 bg-slate-900/80 text-amber-300 font-black text-[10px] px-2 py-0.5 rounded-md backdrop-blur-sm border border-white/15 shadow">
+                ${item.unit}
+              </span>
+            </div>
 
-      const encodedMsg = encodeURIComponent(message);
-      const whatsappUrl = `https://wa.me/${BUSINESS_WHATSAPP}?text=${encodedMsg}`;
+            <!-- Details -->
+            <div class="p-2.5 sm:p-3 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-bold text-xs sm:text-sm text-slate-900 line-clamp-1 group-hover:text-field-700 transition" title="${item.name}">
+                  ${item.name}
+                </h3>
+                <p class="text-[11px] text-slate-500 line-clamp-2 mt-0.5 leading-snug">
+                  ${item.presentation}
+                </p>
+              </div>
 
-      window.open(whatsappUrl, '_blank');
+              <!-- Price & Stepper Button -->
+              <div class="pt-2.5 mt-2 border-t border-slate-100">
+                <div class="flex items-baseline justify-between mb-2">
+                  <span class="text-xs sm:text-sm font-black text-field-700 leading-none">
+                    ${formatCOP(item.price)}
+                  </span>
+                  <span class="text-[10px] text-slate-400 font-medium">${item.unit}</span>
+                </div>
+
+                ${qty === 0 ? `
+                  <button 
+                    onclick="addToCart(${item.id})" 
+                    class="w-full bg-field-700 hover:bg-field-800 active:scale-95 text-white font-black py-2 px-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm transition">
+                    <i class="fa-solid fa-plus text-[10px]"></i>
+                    <span>Pedir</span>
+                  </button>
+                ` : `
+                  <div class="flex items-center justify-between bg-emerald-50 border border-emerald-300 rounded-xl p-1">
+                    <button onclick="changeCartQuantity(${item.id}, -1)" class="w-6 h-6 bg-white text-slate-800 rounded-lg shadow-sm hover:bg-emerald-100 font-black text-xs flex items-center justify-center active:scale-90 transition">
+                      <i class="fa-solid fa-minus text-[9px]"></i>
+                    </button>
+                    <span class="font-black text-field-800 text-xs sm:text-sm px-2">
+                      ${qty}
+                    </span>
+                    <button onclick="changeCartQuantity(${item.id}, 1)" class="w-6 h-6 bg-field-700 text-white rounded-lg shadow-sm hover:bg-field-800 font-black text-xs flex items-center justify-center active:scale-90 transition">
+                      <i class="fa-solid fa-plus text-[9px]"></i>
+                    </button>
+                  </div>
+                `}
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      refreshUI();
-    });
+    function addToCart(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+
+      const itemInCart = cart.find(c => c.id === productId);
+      if (itemInCart) {
+        itemInCart.qty += 1;
+      } else {
+        cart.push({
+          id: prod.id,
+          name: prod.name,
+          price: prod.price,
+          unit: prod.unit,
+          presentation: prod.presentation,
+          image: prod.image,
+          qty: 1
+        });
+      }
+
+      showToast(`Agregaste: ${prod.name}`);
+      updateAllCartViews();
+      renderCatalog();
+    }
+
+    function changeCartQuantity(productId, delta) {
+      const item = cart.find(c => c.id === productId);
+      if (!item) return;
+
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(c => c.id !== productId);
+      }
+
+      updateAllCartViews();
+      renderCatalog();
+    }
+
+    function removeProductFromCart(productId) {
+      cart = cart.filter(c => c.id !== productId);
+      updateAllCartViews();
+      renderCatalog();
+    }
+
+    function updateAllCartViews() {
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      const subtotal = cart.reduce((sum, item) => sum + (item.qty * item.price), 0);
+      const formattedTotal = formatCOP(subtotal);
+
+      // Desktop updates
+      document.getElementById('desktopItemsBadge').textContent = `${totalItems} artículo${totalItems === 1 ? '' : 's'}`;
+      document.getElementById('desktopSubtotalText').textContent = formattedTotal;
+      document.getElementById('desktopTotalText').textContent = formattedTotal;
+      renderDesktopCartItems();
+
+      // Mobile Floating Bar updates
+      const mobileBar = document.getElementById('mobileFloatingBar');
+      const mobileBadge = document.getElementById('mobileFloatingBadge');
+      const mobileTotal = document.getElementById('mobileFloatingTotal');
+      const navBadge = document.getElementById('navMobileCartCount');
+
+      navBadge.textContent = totalItems;
+      mobileBadge.textContent = totalItems;
+      mobileTotal.textContent = formattedTotal;
+
+      if (totalItems > 0) {
+        mobileBar.classList.remove('translate-y-36', 'opacity-0', 'pointer-events-none');
+      } else {
+        mobileBar.classList.add('translate-y-36', 'opacity-0', 'pointer-events-none');
+      }
+
+      // Mobile Drawer updates
+      document.getElementById('mobileSubtotalText').textContent = formattedTotal;
+      document.getElementById('mobileTotalText').textContent = formattedTotal;
+      renderMobileCartItems();
+    }
+
+    // Render items for Desktop persistent sidebar
+    function renderDesktopCartItems() {
+      const container = document.getElementById('desktopCartItems');
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-slate-400">
+            <i class="fa-solid fa-basket-shopping text-3xl mb-2 text-slate-300"></i>
+            <p class="font-bold text-xs text-slate-600">Canasta vacía</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Agrega aguacates, frutas o verduras para armar tu pedido.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="pt-2 first:pt-0 flex items-center justify-between gap-2">
+          <img src="${item.image}" alt="${item.name}" class="w-11 h-11 rounded-lg object-cover bg-slate-100 flex-shrink-0" onerror="this.src='https://placehold.co/80?text=Fruta'">
+          
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 truncate" title="${item.name}">${item.name}</h4>
+            <div class="flex items-center justify-between mt-0.5">
+              <span class="text-[10px] text-slate-500 font-medium">${formatCOP(item.price)} x ${item.unit}</span>
+              <span class="text-xs font-black text-field-700">${formatCOP(item.price * item.qty)}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 flex-shrink-0">
+            <button onclick="changeCartQuantity(${item.id}, -1)" class="w-6 h-6 rounded-md bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-black flex items-center justify-center">
+              -
+            </button>
+            <span class="text-xs font-black text-slate-800 w-4 text-center">${item.qty}</span>
+            <button onclick="changeCartQuantity(${item.id}, 1)" class="w-6 h-6 rounded-md bg-field-700 text-white text-xs font-black flex items-center justify-center">
+              +
+            </button>
+            <button onclick="removeProductFromCart(${item.id})" class="text-slate-400 hover:text-rose-600 p-1 text-xs ml-0.5">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render items for Mobile slide-over drawer
+    function renderMobileCartItems() {
+      const container = document.getElementById('mobileCartItems');
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-400">
+            <i class="fa-solid fa-cart-arrow-down text-4xl mb-2 text-slate-300"></i>
+            <p class="font-bold text-sm text-slate-600">Aún no has agregado nada</p>
+            <p class="text-xs text-slate-400 mt-1">Explora los productos y pulsa en "Pedir" con un solo toque.</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="bg-white p-2.5 rounded-xl border border-slate-200 flex items-center justify-between gap-2 shadow-sm">
+          <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded-lg object-cover bg-slate-100 flex-shrink-0" onerror="this.src='https://placehold.co/80?text=San+Isidro'">
+          
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 truncate">${item.name}</h4>
+            <span class="text-[10px] text-slate-500 font-medium block">${item.unit} (${formatCOP(item.price)})</span>
+            <span class="text-xs font-black text-field-700">${formatCOP(item.price * item.qty)}</span>
+          </div>
+
+          <div class="flex items-center gap-1.5 flex-shrink-0">
+            <button onclick="changeCartQuantity(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 text-xs font-black flex items-center justify-center active:scale-90">
+              -
+            </button>
+            <span class="text-xs font-black text-slate-800 w-5 text-center">${item.qty}</span>
+            <button onclick="changeCartQuantity(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-field-700 text-white text-xs font-black flex items-center justify-center active:scale-90">
+              +
+            </button>
+            <button onclick="removeProductFromCart(${item.id})" class="text-slate-400 hover:text-rose-600 p-1 text-xs">
+              <i class="fa-solid fa-trash-can"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openMobileCart() {
+      const drawer = document.getElementById('mobileCartDrawer');
+      const backdrop = document.getElementById('mobileCartBackdrop');
+      backdrop.classList.remove('pointer-events-none', 'opacity-0');
+      drawer.classList.remove('translate-x-full');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileCart() {
+      const drawer = document.getElementById('mobileCartDrawer');
+      const backdrop = document.getElementById('mobileCartBackdrop');
+      backdrop.classList.add('pointer-events-none', 'opacity-0');
+      drawer.classList.add('translate-x-full');
+      document.body.style.overflow = 'auto';
+    }
+
+    function dispatchWhatsAppOrder(source) {
+      if (cart.length === 0) {
+        showToast("Primero agrega al menos un producto a la canasta");
+        return;
+      }
+
+      const prefix = source === 'desktop' ? 'desk' : 'mob';
+      const name = document.getElementById(`${prefix}Name`).value.trim();
+      const address = document.getElementById(`${prefix}Address`).value.trim();
+      const city = document.getElementById(`${prefix}City`).value.trim();
+      const phone = document.getElementById(`${prefix}Phone`).value.trim();
+      const payment = document.getElementById(`${prefix}Payment`).value;
+      const notes = document.getElementById(`${prefix}Notes`).value.trim();
+
+      if (!name || !address || !city) {
+        showToast("Por favor ingresa Nombre, Dirección y Barrio de entrega");
+        return;
+      }
+
+      const totalCOP = cart.reduce((sum, item) => sum + (item.qty * item.price), 0);
+      const totalUnits = cart.reduce((sum, item) => sum + item.qty, 0);
+
+      // Construct clear structured WhatsApp text for wholesale seller
+      let message = `🥑 *NUEVO PEDIDO - MAYORISTA SAN ISIDRO*\n`;
+      message += `_Venta directa del campo al mercado_\n`;
+      message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+      message += `👤 *Cliente / Negocio:* ${name}\n`;
+      message += `📍 *Dirección:* ${address}\n`;
+      message += `🏙️ *Barrio / Municipio:* ${city}\n`;
+      if (phone) message += `📞 *Teléfono contacto:* ${phone}\n`;
+      message += `💳 *Forma de pago:* ${payment}\n`;
+      if (notes) message += `📝 *Observaciones:* ${notes}\n`;
+      message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+      message += `🧺 *PRODUCTOS SOLICITADOS (${totalUnits} unidades/bultos/kilos):*\n\n`;
+
+      cart.forEach((item, index) => {
+        const itemSub = formatCOP(item.qty * item.price);
+        message += `${index + 1}. *${item.name}*\n`;
+        message += `   └ Cantidad: ${item.qty} (${item.unit}) × ${formatCOP(item.price)} = *${itemSub}*\n`;
+      });
+
+      message += `\n━━━━━━━━━━━━━━━━━━━━━\n`;
+      message += `💰 *TOTAL PRODUCTOS: ${formatCOP(totalCOP)}*\n`;
+      message += `_(Flete o logística de despacho a convenir según ruta)_\n\n`;
+      message += `Hola, solicito confirmar disponibilidad y hora de despacho. ¡Muchas gracias!`;
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://wa.me/${STORE_CONFIG.phone}?text=${encoded}`, '_blank');
+    }
+
+    function openDailyManagerModal() {
+      const list = document.getElementById('adminEditableList');
+      list.innerHTML = products.map(p => `
+        <div class="p-2.5 flex items-center justify-between gap-2 bg-white hover:bg-slate-50 text-xs">
+          <div class="flex items-center gap-2 flex-1 min-w-0">
+            <span class="w-2 h-2 rounded-full ${p.available ? 'bg-emerald-500' : 'bg-rose-400'}"></span>
+            <div class="truncate">
+              <span class="font-bold text-slate-800 block truncate">${p.name}</span>
+              <span class="text-[10px] text-slate-400">${p.unit}</span>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-[10px] text-slate-400 font-bold">COP$</span>
+            <input 
+              type="number" 
+              id="price_input_${p.id}" 
+              value="${p.price}" 
+              step="100" 
+              class="w-20 p-1 border rounded font-black text-field-700 text-right text-xs">
+            
+            <label class="flex items-center gap-1 text-[11px] font-medium cursor-pointer pl-1">
+              <input type="checkbox" id="stock_check_${p.id}" ${p.available ? 'checked' : ''} class="rounded text-field-700">
+              <span>Activo</span>
+            </label>
+          </div>
+        </div>
+      `).join('');
+
+      document.getElementById('dailyManagerModal').classList.remove('hidden');
+    }
+
+    function closeDailyManagerModal() {
+      document.getElementById('dailyManagerModal').classList.add('hidden');
+    }
+
+    function saveDailyManagerChanges() {
+      products.forEach(p => {
+        const priceEl = document.getElementById(`price_input_${p.id}`);
+        const stockEl = document.getElementById(`stock_check_${p.id}`);
+        if (priceEl) {
+          const val = parseFloat(priceEl.value);
+          if (!isNaN(val) && val > 0) p.price = val;
+        }
+        if (stockEl) {
+          p.available = stockEl.checked;
+        }
+      });
+
+      // Synchronize cart items with updated prices
+      cart.forEach(cartItem => {
+        const matching = products.find(p => p.id === cartItem.id);
+        if (matching) {
+          cartItem.price = matching.price;
+        }
+      });
+
+      localStorage.setItem(STORE_CONFIG.storageKey, JSON.stringify(products));
+      closeDailyManagerModal();
+      renderCatalog();
+      updateAllCartViews();
+      showToast("Precios y existencias del día actualizados correctamente.");
+    }
+
+    function restoreInitialDefaults() {
+      if (confirm("¿Seguro que deseas restaurar la lista y precios iniciales?")) {
+        products = [...SEED_PRODUCTS];
+        localStorage.removeItem(STORE_CONFIG.storageKey);
+        closeDailyManagerModal();
+        renderCatalog();
+        updateAllCartViews();
+        showToast("Catálogo restablecido al estado original.");
+      }
+    }
+
+    async function syncGoogleSheetsCSV() {
+      const url = document.getElementById('sheetUrlInput').value.trim();
+      if (!url) {
+        showToast("Ingresa el enlace CSV publicado en la web");
+        return;
+      }
+
+      try {
+        const response = await fetch(url);
+        const csvText = await response.text();
+        const lines = csvText.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+
+        if (lines.length <= 1) {
+          throw new Error("El documento no tiene suficientes filas");
+        }
+
+        // Header: nombre, categoria, precio, unidad, presentacion, imagen, descripcion, tag, disponible
+        const imported = [];
+        for (let i = 1; i < lines.length; i++) {
+          const cols = lines[i].split(',').map(c => c.replace(/^"|"$/g, '').trim());
+          if (cols.length >= 3) {
+            imported.push({
+              id: Date.now() + i,
+              name: cols[0] || `Producto ${i}`,
+              category: (cols[1] || 'frutas').toLowerCase(),
+              price: parseFloat(cols[2]?.replace(/[^0-9.]/g, '')) || 1000,
+              unit: cols[3] || 'Kilo',
+              presentation: cols[4] || 'Presentación estándar',
+              image: cols[5] || 'https://placehold.co/400x300/1e6822/ffffff?text=San+Isidro',
+              desc: cols[6] || 'Venta directa del campo al mercado.',
+              tag: cols[7] || null,
+              available: cols[8] ? (cols[8].toUpperCase() === 'SI' || cols[8].toUpperCase() === 'TRUE') : true
+            });
+          }
+        }
+
+        if (imported.length > 0) {
+          products = imported;
+          localStorage.setItem(STORE_CONFIG.storageKey, JSON.stringify(products));
+          closeDailyManagerModal();
+          renderCatalog();
+          updateAllCartViews();
+          showToast(`¡${imported.length} productos importados desde tu Google Sheet!`);
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("No se pudo leer la hoja. Asegúrate de que esté 'Publicada en la web como CSV'.");
+      }
+    }
+
+    function showToast(text) {
+      const box = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMessage');
+      msg.textContent = text;
+      box.classList.remove('hidden');
+
+      setTimeout(() => {
+        box.classList.add('hidden');
+      }, 2400);
+    }
+
+    // Start App
+    window.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
 </html>
